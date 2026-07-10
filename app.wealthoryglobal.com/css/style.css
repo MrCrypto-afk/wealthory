@@ -73,8 +73,14 @@ h1, h2, h3, h4 { color: var(--color-text); font-weight: 700; line-height: 1.2; }
   margin: -40px 0; /* Prevent the navbar from becoming too tall */
 }
 
-.site-nav .logo .logo-dark { display: block; }
-.site-nav .logo .logo-light { display: none; }
+.site-nav .logo .logo-dark { 
+  display: block; 
+  mix-blend-mode: screen; /* Makes solid black background completely transparent */
+}
+.site-nav .logo .logo-light { 
+  display: none; 
+  mix-blend-mode: multiply; /* Makes solid white background completely transparent */
+}
 
 :root.light .site-nav .logo .logo-dark { display: none; }
 :root.light .site-nav .logo .logo-light { display: block; }

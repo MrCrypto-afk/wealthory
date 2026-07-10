@@ -30,9 +30,9 @@ export function Navbar() {
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           {mounted && theme === "light" ? (
-            <img src="/logo-light.png" alt="Wealthory Logo" className="h-16 w-auto" />
+            <img src="/logo-light.png" alt="Wealthory Logo" className="h-16 w-auto mix-blend-multiply" />
           ) : (
-            <img src="/logo-dark.png" alt="Wealthory Logo" className="h-16 w-auto" />
+            <img src="/logo-dark.png" alt="Wealthory Logo" className="h-16 w-auto mix-blend-screen" />
           )}
           <div className="flex flex-col">
             <span className="font-serif font-semibold tracking-widest text-foreground leading-tight text-3xl">
