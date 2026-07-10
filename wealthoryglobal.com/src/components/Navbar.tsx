@@ -48,9 +48,9 @@ export function Navbar() {
           <Link href="#about" className="text-sm font-medium text-text-muted hover:text-foreground transition-colors uppercase tracking-widest">
             About
           </Link>
-          <Link href="#services" className="text-sm font-medium text-text-muted hover:text-foreground transition-colors uppercase tracking-widest">
-            Services
-          </Link>
+          <a href="https://app.wealthoryglobal.com/" target="_blank" rel="noreferrer" className="text-sm font-medium text-text-muted hover:text-foreground transition-colors uppercase tracking-widest">
+            Calculators
+          </a>
           <a href="https://wealthory.substack.com/" target="_blank" rel="noreferrer" className="text-sm font-medium text-text-muted hover:text-foreground transition-colors uppercase tracking-widest">
             Insights ↗
           </a>

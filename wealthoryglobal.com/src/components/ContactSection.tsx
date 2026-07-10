@@ -53,12 +53,11 @@ export function ContactSection() {
               Begin the <span className="text-accent-primary italic">Conversation</span>
             </h2>
             <p className="text-text-muted text-lg font-light leading-relaxed">
-              We partner exclusively with high-net-worth individuals, family offices, and institutions. Reach out to schedule a private consultation regarding your portfolio architecture.
+              Whether you have a question about our calculators, want to share feedback, or just want to say hello, we'd love to hear from you!
             </p>
             <div className="pt-8 space-y-4">
-              <p className="text-foreground font-medium">Headquarters</p>
-              <p className="text-text-muted font-light">Global Financial District<br/>New York, NY 10004</p>
-              <p className="text-text-muted font-light mt-4">inquiries@wealthoryglobal.com</p>
+              <p className="text-foreground font-medium">Contact Details</p>
+              <p className="text-text-muted font-light mt-4">Email: inquiries@wealthoryglobal.com</p>
             </div>
           </div>
 
