@@ -40,15 +40,16 @@ export function PhilosophySection() {
             </div>
             <h3 className="text-2xl font-serif font-medium text-foreground">Wealthory Global on Substack</h3>
             <p className="text-text-muted font-light">Navigating markets with clarity and purpose.</p>
-            <div className="mt-8">
-              <a 
-                href="https://wealthory.substack.com/" 
-                target="_blank" 
-                rel="noreferrer"
-                className="inline-flex w-full items-center justify-center px-6 py-3 rounded-lg bg-[#FF6719] text-white font-medium hover:bg-[#FF6719]/90 transition-colors"
-              >
-                Subscribe Now
-              </a>
+            <div className="mt-8 w-full bg-white rounded-lg overflow-hidden shadow-inner">
+              <iframe 
+                src="https://wealthory.substack.com/embed" 
+                width="100%" 
+                height="320" 
+                style={{ border: "none", background: "white" }}
+                frameBorder="0" 
+                scrolling="no"
+                title="Wealthory Substack Subscribe"
+              ></iframe>
             </div>
           </div>
         </div>
