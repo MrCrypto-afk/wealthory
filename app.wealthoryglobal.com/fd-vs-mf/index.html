@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FD vs Mutual Fund Calculator – Compare Returns After Tax | Wealthory</title>
+  <meta name="description" content="Compare Fixed Deposit vs Mutual Fund returns after tax and inflation. Find out which is better for your financial goals with our free FD vs MF calculator.">
+  <meta name="keywords" content="FD vs mutual fund, fixed deposit vs mutual fund comparison, which is better FD or mutual fund, FD vs MF returns">
+  <link rel="canonical" href="https://app.wealthoryglobal.com/fd-vs-mf/">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Which is better, FD or Mutual Fund?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on your risk tolerance and investment horizon. FDs offer guaranteed returns but are fully taxable at your slab rate. Mutual funds carry market risk but benefit from lower long-term capital gains tax (10% above Rs 1 lakh) and typically deliver higher inflation-adjusted returns over 5+ years."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How are FD returns taxed in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Interest earned on fixed deposits is added to your total income and taxed at your applicable income tax slab rate. TDS is deducted at 10% if total interest exceeds Rs 40,000 in a financial year (Rs 50,000 for senior citizens)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is LTCG tax on mutual funds?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Long-Term Capital Gains (LTCG) on equity mutual funds held for more than one year are taxed at 10% on gains exceeding Rs 1,00,000 in a financial year. There is no tax on LTCG up to Rs 1 lakh."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does inflation affect FD and mutual fund returns?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Inflation erodes purchasing power. If your FD earns 7% but inflation is 6%, your real return is roughly 1%. Mutual funds with higher expected returns (12-15%) tend to beat inflation more comfortably, preserving and growing wealth in real terms."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+<header>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a href="/" class="logo" aria-label="Wealthory Home"><img src="/assets/logo.png" alt="Wealthory Logo" /></a>
+    <div class="nav-links"><a href="/resources">Resources</a><a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+  </nav>
+</header>
+
+<main class="page-container">
+  <div class="page-header">
+    <h1>FD vs Mutual Fund Calculator</h1>
+    <p>Compare fixed deposit and mutual fund returns after tax and inflation to make smarter investment decisions.</p>
+  </div>
+
+  <div class="calc-layout">
+    <!-- Input Panel -->
+    <section class="calc-panel" aria-label="Calculator inputs">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem;"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg>
+        Enter Details
+      </h2>
+
+      <div class="field">
+        <label for="investmentAmount">Investment Amount <span class="input-wrapper">₹ <input type="number" class="manual-input" id="investmentAmount-input" value="500000" min="0"></span></label>
+        <input type="range" id="investmentAmount" min="10000" max="10000000" step="10000" value="500000" aria-label="Investment amount in rupees">
+      </div>
+
+      <div class="field">
+        <label for="fdRate">FD Interest Rate (% p.a.) <span class="input-wrapper"><input type="number" class="manual-input" id="fdRate-input" value="7" min="0" step="0.1"> %</span></label>
+        <input type="range" id="fdRate" min="3" max="10" step="0.1" value="7" aria-label="Fixed deposit interest rate percentage">
+      </div>
+
+      <div class="field">
+        <label for="mfReturn">MF Expected Return (% p.a.) <span class="input-wrapper"><input type="number" class="manual-input" id="mfReturn-input" value="12" min="0" step="0.5"> %</span></label>
+        <input type="range" id="mfReturn" min="5" max="20" step="0.5" value="12" aria-label="Mutual fund expected return percentage">
+      </div>
+
+      <div class="field">
+        <label for="period">Investment Period (Years) <span class="input-wrapper"><input type="number" class="manual-input" id="period-input" value="5" min="0"> Yr</span></label>
+        <input type="range" id="period" min="1" max="30" step="1" value="5" aria-label="Investment period in years">
+      </div>
+
+      <div class="field">
+        <label for="taxBracket">Tax Bracket <span class="value" id="taxBracketVal">30%</span></label>
+        <select id="taxBracket" aria-label="Income tax slab rate" style="width:100%;padding:0.6rem 0.75rem;border:1px solid var(--color-border);border-radius:var(--radius);font-family:var(--font-primary);font-size:0.95rem;color:var(--color-text);outline:none;background:#fff;cursor:pointer;">
+          <option value="0">0% (No Tax)</option>
+          <option value="5">5%</option>
+          <option value="20">20%</option>
+          <option value="30" selected>30%</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Results Panel -->
+    <section class="calc-panel" aria-label="Comparison results">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Comparison Results
+      </h2>
+
+      <div class="result-card" style="margin-bottom: 2rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02); background:var(--color-accent);">
+        <div class="result-label" style="color:rgba(255,255,255,0.8);">Extra Wealth Created with Mutual Fund</div>
+        <div class="result-value highlight" id="difference" style="font-size: 2.25rem; color:#fff;">--</div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem; padding:0 0.5rem;">
+        <div>
+          <div class="result-label">MF Value (After Tax)</div>
+          <div class="result-value" style="font-size:1.3rem;" id="mfValue">--</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="result-label">FD Value (After Tax)</div>
+          <div class="result-value" style="font-size:1.3rem;" id="fdValue">--</div>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem; padding:0 0.5rem;">
+        <div>
+          <div class="result-label">MF Real Return (Post-Inflation)</div>
+          <div class="result-value" style="font-size:1.1rem; color:var(--color-text-muted);" id="mfReal">--</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="result-label">FD Real Return (Post-Inflation)</div>
+          <div class="result-value" style="font-size:1.1rem; color:var(--color-text-muted);" id="fdReal">--</div>
+        </div>
+      </div>
+      
+      <div style="display:flex; justify-content:space-between; margin-bottom:2rem; padding:0 0.5rem;">
+        <div>
+          <div class="result-label">MF Effective Rate</div>
+          <div class="result-value" style="font-size:1.1rem; color:var(--color-text-muted);" id="mfEffective">--</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="result-label">FD Effective Rate</div>
+          <div class="result-value" style="font-size:1.1rem; color:var(--color-text-muted);" id="fdEffective">--</div>
+        </div>
+      </div>
+
+      <div class="chart-container" style="max-width:100%;margin-top:1.5rem;">
+        <canvas id="comparisonChart" aria-label="Bar chart comparing FD and Mutual Fund returns"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <!-- SEO Content -->
+  <section class="seo-content" aria-label="About FD vs Mutual Fund comparison">
+    <h2>FD vs Mutual Fund: Which Is Better for Your Money?</h2>
+    <p>Choosing between a fixed deposit and a mutual fund is one of the most common financial decisions Indian investors face. Both instruments serve different purposes and suit different risk profiles. Understanding the key differences in returns, taxation, and inflation impact is essential before committing your hard-earned money.</p>
+
+    <h3>How Fixed Deposits Work</h3>
+    <p>A fixed deposit locks your money with a bank for a predetermined period at a guaranteed interest rate. The principal is safe, and the returns are predictable. However, FD interest is fully taxable at your income tax slab rate, which significantly reduces the effective return. For someone in the 30% tax bracket, a 7% FD effectively yields only around 4.9% per annum before adjusting for inflation.</p>
+
+    <h3>How Mutual Funds Compare</h3>
+    <p>Equity mutual funds invest in the stock market and have the potential to deliver higher returns over the long term. While they carry market risk, systematic investments over 5 years or more have historically delivered 10-15% annualised returns. The tax treatment is also more favourable: long-term capital gains on equity mutual funds are taxed at just 10% on profits exceeding Rs 1 lakh per financial year.</p>
+
+    <h3>The Inflation Factor</h3>
+    <p>Inflation averaging around 6% in India means your money loses purchasing power every year. An FD returning 7% pre-tax actually delivers a negative real return after taxes for those in higher tax brackets. Mutual funds, with their higher return potential, are better positioned to beat inflation and grow wealth in real terms.</p>
+
+    <h3>When to Choose FD Over Mutual Funds</h3>
+    <ul>
+      <li>You need guaranteed, predictable returns for short-term goals (less than 3 years)</li>
+      <li>You have very low risk tolerance and cannot handle market fluctuations</li>
+      <li>You are in a lower tax bracket where the tax impact is minimal</li>
+      <li>You need regular income through interest payouts</li>
+    </ul>
+
+    <h3>Making the Right Choice</h3>
+    <p>For long-term wealth creation, equity mutual funds typically outperform fixed deposits even after accounting for market volatility. Use our FD vs Mutual Fund calculator above to see the exact difference based on your investment amount, time horizon, and tax bracket. The comparison includes post-tax returns and inflation-adjusted real values to give you a complete picture.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+  <nav aria-label="Footer navigation" style="margin-top:0.5rem;"><a href="/">Home</a><a href="/resources">Resources</a></nav>
+</footer>
+
+<script>
+(function () {
+  const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+  const fmtCur = v => '\u20B9' + fmt.format(Math.round(v));
+
+  const $ = id => document.getElementById(id);
+
+  const inputs = {
+    amount: $('investmentAmount'),
+    fdRate: $('fdRate'),
+    mfReturn: $('mfReturn'),
+    period: $('period'),
+    taxBracket: $('taxBracket')
+  };
+
+  const displays = {
+    amountVal: $('investmentAmountVal'),
+    fdRateVal: $('fdRateVal'),
+    mfReturnVal: $('mfReturnVal'),
+    periodVal: $('periodVal'),
+    taxBracketVal: $('taxBracketVal')
+  };
+
+  let chart = null;
+
+  function calculate() {
+    const P = Number(inputs.amount.value) || 0;
+    const fdR = Number(inputs.fdRate.value) / 100 || 0;
+    const mfR = Number(inputs.mfReturn.value) / 100 || 0;
+    const years = Number(inputs.period.value) || 0;
+    const taxRate = Number(inputs.taxBracket.value) / 100 || 0;
+    const inflationRate = 0.06;
+
+    // Update slider labels (handled by sync now, so removing these)
+
+    // FD Calculation: compound interest, then tax on total interest at slab rate
+    const fdGross = P * Math.pow(1 + fdR, years);
+    const fdInterest = fdGross - P;
+    const fdTax = fdInterest * taxRate;
+    const fdNet = fdGross - fdTax;
+
+    // MF Calculation: compound growth, 10% LTCG on gains above 1 lakh
+    const mfGross = P * Math.pow(1 + mfR, years);
+    const mfGain = mfGross - P;
+    let mfTax = 0;
+    if (years >= 1) {
+      const taxableGain = Math.max(0, mfGain - 100000);
+      mfTax = taxableGain * 0.10;
+    } else {
+      // STCG at 15%
+      mfTax = mfGain * 0.15;
+    }
+    const mfNet = mfGross - mfTax;
+
+    // Real returns after inflation
+    const inflationFactor = Math.pow(1 + inflationRate, years);
+    const fdRealValue = fdNet / inflationFactor;
+    const mfRealValue = mfNet / inflationFactor;
+
+    // Effective post-tax annual rates
+    const fdEffRate = (Math.pow(fdNet / P, 1 / years) - 1) * 100;
+    const mfEffRate = (Math.pow(mfNet / P, 1 / years) - 1) * 100;
+
+    // Update DOM
+    $('fdValue').textContent = fmtCur(fdNet);
+    $('mfValue').textContent = fmtCur(mfNet);
+
+    const diff = mfNet - fdNet;
+    $('difference').textContent = (diff >= 0 ? '+' : '') + fmtCur(diff);
+
+    $('fdReal').textContent = fmtCur(fdRealValue);
+    $('mfReal').textContent = fmtCur(mfRealValue);
+    $('fdEffective').textContent = fdEffRate.toFixed(2) + '% p.a.';
+    $('mfEffective').textContent = mfEffRate.toFixed(2) + '% p.a.';
+
+    // Chart
+    updateChart(P, fdNet, mfNet, fdRealValue, mfRealValue);
+  }
+
+  function updateChart(invested, fdNet, mfNet, fdReal, mfReal) {
+    const ctx = $('comparisonChart').getContext('2d');
+
+    const data = {
+      labels: ['Invested', 'FD (Post-Tax)', 'MF (Post-Tax)', 'FD (Real)', 'MF (Real)'],
+      datasets: [{
+        label: 'Amount (\u20B9)',
+        data: [invested, fdNet, mfNet, fdReal, mfReal],
+        backgroundColor: [
+          '#e2e5e9',
+          '#FFB300',
+          '#0044CC',
+          'rgba(255,179,0,0.45)',
+          'rgba(0,68,204,0.45)'
+        ],
+        borderRadius: 6,
+        barPercentage: 0.65
+      }]
+    };
+
+    if (chart) {
+      chart.data = data;
+      chart.update();
+    } else {
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: ctx => fmtCur(ctx.parsed.y)
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: v => '\u20B9' + fmt.format(v),
+                font: { size: 11 }
+              },
+              grid: { color: 'rgba(0,0,0,0.04)' }
+            },
+            x: {
+              ticks: { font: { size: 11 } },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // Bind events
+  function sync(idBase, val) {
+    if(val < 0) val = 0; // Prevent negative
+    const slider = document.getElementById(idBase);
+    const input = document.getElementById(idBase + '-input');
+    if (slider && input) {
+      slider.value = val;
+      input.value = val;
+    }
+    calculate();
+  }
+
+  Object.values(inputs).forEach(el => {
+    if (el.id === 'taxBracket') {
+      el.addEventListener('change', calculate);
+    } else {
+      el.addEventListener('input', (e) => sync(e.target.id, e.target.value));
+    }
+  });
+  
+  document.querySelectorAll('.manual-input').forEach(input => {
+    input.addEventListener('input', (e) => {
+      const idBase = e.target.id.replace('-input', '');
+      sync(idBase, e.target.value);
+    });
+  });
+
+  // Initial calculation
+  calculate();
+})();
+</script>
+
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

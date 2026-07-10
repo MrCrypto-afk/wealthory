@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMI & Debt Amortisation Calculator | Wealthory Global</title>
+  <meta name="description" content="Calculate your Equated Monthly Instalments for home loans, personal loans, and auto loans. Institutional-grade precision." />
+  <link rel="canonical" href="https://app.wealthoryglobal.com/emi" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is an EMI?", "acceptedAnswer": { "@type": "Answer", "text": "Equated Monthly Instalment (EMI) is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. EMIs are used to pay off both interest and principal each month." } },
+      { "@type": "Question", "name": "How does interest work on loans?", "acceptedAnswer": { "@type": "Answer", "text": "Loans typically use a reducing balance method. As you pay your EMI, a portion goes to the interest and the rest reduces your principal. In the early years, interest forms a larger portion of the EMI." } }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home">
+        <img src="/assets/logo.png" alt="Wealthory Logo" />
+      </a>
+      <div class="nav-links">
+        <a href="https://admin.wealthoryglobal.com" class="nav-utility">Advisor Login</a>
+        <a href="/resources">Insights</a>
+        <a href="/" class="nav-cta">All Tools</a>
+      
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>EMI Calculator</h1>
+      <p>Compute precise equated monthly instalments and model your debt amortisation structure.</p>
+    </div>
+
+    <div class="calc-layout">
+      <!-- Input Panel -->
+      <div class="calc-panel">
+        <div class="field">
+          <label for="loan-amt"><span>Loan Amount</span> <span class="input-wrapper">₹ <input type="number" class="manual-input" id="loan-amt-input" value="5000000" min="0"></span></label>
+          <input type="range" id="loan-amt" min="100000" max="50000000" step="100000" value="5000000" aria-label="Loan Amount" />
+        </div>
+        <div class="field">
+          <label for="int-rate"><span>Interest Rate (p.a)</span> <span class="input-wrapper"><input type="number" class="manual-input" id="int-rate-input" value="8.5" min="0" step="0.1"> %</span></label>
+          <input type="range" id="int-rate" min="1" max="20" step="0.1" value="8.5" aria-label="Interest Rate" />
+        </div>
+        <div class="field">
+          <label for="tenure"><span>Loan Tenure</span> <span class="input-wrapper"><input type="number" class="manual-input" id="tenure-input" value="20" min="0"> Yr</span></label>
+          <input type="range" id="tenure" min="1" max="30" step="1" value="20" aria-label="Loan Tenure in Years" />
+        </div>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="calc-panel">
+        <div class="result-card">
+          <div class="result-label">Monthly EMI</div>
+          <div class="result-value highlight" id="res-emi">₹0</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">Principal Amount</div>
+            <div class="result-value" style="font-size:1.25rem;" id="res-principal">₹0</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">Total Interest</div>
+            <div class="result-value" style="font-size:1.25rem;" id="res-interest">₹0</div>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="calcChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic SEO Hub -->
+    <section class="seo-content" aria-labelledby="seo-title">
+      <h2 id="seo-title">The Mechanics of Debt Amortisation</h2>
+      <p>Understanding your Equated Monthly Instalment (EMI) is critical for effective liability management. Our institutional-grade calculator uses standard amortisation algorithms to split your payments between principal reduction and interest capitalization.</p>
+      
+      <h3>How does Loan Interest work?</h3>
+      <p>Most retail loans operate on a reducing balance basis. When a loan begins, the outstanding principal is at its highest, meaning the interest component of your EMI is also at its peak. Over time, as the principal decreases, the interest portion shrinks and the principal repayment portion accelerates.</p>
+      
+      <h3>The EMI Formula Architecture</h3>
+      <div class="formula-box">
+        <strong>EMI = P × r × (1+r)<sup>n</sup> / ((1+r)<sup>n</sup> - 1)</strong><br><br>
+        <span style="font-size:0.9rem; color:var(--color-text-muted);">
+        Where:<br>
+        <strong>P</strong> = Principal Loan Amount<br>
+        <strong>r</strong> = Monthly Interest Rate (Annual Rate / 12 / 100)<br>
+        <strong>n</strong> = Loan Tenure in Months
+        </span>
+      </div>
+
+      <h3>Frequently Asked Questions</h3>
+      <details>
+        <summary>What is an EMI?</summary>
+        <p>An Equated Monthly Instalment (EMI) is the fixed sum of money you pay a financial institution each month to clear a debt. It covers both the interest accrued for that month and a portion of the original capital borrowed.</p>
+      </details>
+      <details>
+        <summary>How can I reduce my total interest outflow?</summary>
+        <p>You can significantly reduce interest costs by either negotiating a lower interest rate, reducing the tenure of the loan (which increases monthly EMI but decreases total interest), or making regular prepayments towards the principal amount.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="compliance-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p><strong>Risk Warning:</strong> Mutual fund investments are subject to market risks, read all scheme related documents carefully. The calculators provided on this platform are for illustrative purposes only and do not constitute financial advice. Past performance is not indicative of future returns.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+          <a href="/grievance">Grievance Redressal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const fmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    let chart;
+
+    function initChart() {
+      const ctx = document.getElementById('calcChart').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: ['Principal', 'Interest'], datasets: [{ data: [50, 50], backgroundColor: ['#0044cc', '#ffb300'], borderWidth: 0 }] },
+        options: { cutout: '75%', plugins: { legend: { display: false } } }
+      });
+    }
+
+    function calculate() {
+      let P = parseFloat(document.getElementById('loan-amt-input').value) || 0;
+      let R = parseFloat(document.getElementById('int-rate-input').value) || 0;
+      let years = parseInt(document.getElementById('tenure-input').value) || 0;
+      
+      let r = R / 12 / 100;
+      let n = years * 12;
+      
+      let emi = 0;
+      if (r > 0) {
+        emi = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+      } else {
+        emi = P / n;
+      }
+      
+      let totalPayment = emi * n;
+      let totalInterest = totalPayment - P;
+
+      document.getElementById('res-principal').textContent = fmt.format(P);
+      document.getElementById('res-interest').textContent = fmt.format(totalInterest);
+      document.getElementById('res-emi').textContent = fmt.format(emi);
+
+      chart.data.datasets[0].data = [P, totalInterest];
+      chart.update();
+    }
+
+    function sync(idBase, val) {
+      if(val < 0) val = 0; // Prevent negative
+      const slider = document.getElementById(idBase);
+      const input = document.getElementById(idBase + '-input');
+      if (slider && input) {
+        slider.value = val;
+        input.value = val;
+      }
+      calculate();
+    }
+
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      slider.addEventListener('input', (e) => sync(e.target.id, e.target.value));
+    });
+    document.querySelectorAll('.manual-input').forEach(input => {
+      input.addEventListener('input', (e) => {
+        const idBase = e.target.id.replace('-input', '');
+        sync(idBase, e.target.value);
+      });
+    });
+
+    window.onload = () => { initChart(); calculate(); };
+  </script>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

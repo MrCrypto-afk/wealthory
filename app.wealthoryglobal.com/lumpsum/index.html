@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumpsum Calculator – Calculate One-Time Investment Returns | Wealthory</title>
+  <meta name="description" content="Use our free lumpsum calculator to estimate returns on your one-time investment. Calculate future value of lumpsum investment with compound interest instantly.">
+  <meta name="keywords" content="lumpsum calculator, lumpsum investment calculator, one time investment calculator, lump sum returns, compound interest calculator">
+  <link rel="canonical" href="https://app.wealthoryglobal.com/lumpsum/">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a lumpsum investment?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A lumpsum investment is a one-time investment where you invest a fixed amount of money at once, rather than spreading it over regular intervals. The entire amount is invested upfront and grows through the power of compounding over the chosen period."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is lumpsum return calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lumpsum returns are calculated using the compound interest formula: Future Value = P × (1 + r)^n, where P is the principal amount, r is the annual rate of return (as a decimal), and n is the number of years."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is lumpsum better than SIP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lumpsum investing can outperform SIP in consistently rising markets because the full amount benefits from compounding from day one. However, SIP offers rupee cost averaging which reduces risk in volatile markets. The best choice depends on market conditions, your risk tolerance, and available capital."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good rate of return for lumpsum investments?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Historically, equity mutual funds in India have delivered 12-15% annualised returns over long periods. Debt funds typically return 6-8%. A diversified portfolio may average 10-12% annually. The actual return depends on the asset class, market conditions, and investment horizon."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home"><img src="/assets/logo.png" alt="Wealthory Logo" /></a>
+      <div class="nav-links"><a href="/resources">Resources</a><a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>Lumpsum Calculator</h1>
+      <p>Calculate the future value of your one-time investment with the power of compounding.</p>
+    </div>
+
+    <section class="calc-layout" aria-label="Lumpsum investment calculator">
+
+      <!-- Input Panel -->
+      <div class="calc-panel">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M12 4v16"/><path d="M2 12h20"/></svg>
+          Investment Details
+        </h2>
+
+        <div class="field">
+          <label for="investmentAmount">
+            Investment Amount
+            <span class="input-wrapper">₹ <input type="number" class="manual-input" id="investmentAmount-input" value="500000" min="0"></span>
+          </label>
+          <input type="range" id="investmentAmount" min="10000" max="100000000" step="10000" value="500000" aria-label="Investment amount in rupees" aria-valuemin="10000" aria-valuemax="100000000" aria-valuenow="500000">
+        </div>
+
+        <div class="field">
+          <label for="expectedReturn">
+            Expected Return Rate (p.a.)
+            <span class="input-wrapper"><input type="number" class="manual-input" id="expectedReturn-input" value="12" min="0" step="0.5"> %</span>
+          </label>
+          <input type="range" id="expectedReturn" min="1" max="30" step="0.5" value="12" aria-label="Expected annual return percentage" aria-valuemin="1" aria-valuemax="30" aria-valuenow="12">
+        </div>
+
+        <div class="field">
+          <label for="investmentPeriod">
+            Investment Period
+            <span class="input-wrapper"><input type="number" class="manual-input" id="investmentPeriod-input" value="10" min="0"> Yr</span>
+          </label>
+          <input type="range" id="investmentPeriod" min="1" max="40" step="1" value="10" aria-label="Investment period in years" aria-valuemin="1" aria-valuemax="40" aria-valuenow="10">
+        </div>
+      </div>
+
+      <!-- Results Panel -->
+      <div class="calc-panel">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Estimated Returns
+        </h2>
+
+        <div class="result-card" style="margin-bottom: 2rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02);">
+          <div class="result-label" style="color: var(--color-text);">Total Value</div>
+          <div class="result-value highlight" id="totalValue" style="font-size: 2.25rem;">--</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:2rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">Total Investment</div>
+            <div class="result-value" style="font-size:1.3rem;" id="totalInvestment">--</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">Estimated Returns</div>
+            <div class="result-value" style="font-size:1.3rem;" id="estimatedReturns">--</div>
+          </div>
+        </div>
+
+        <div class="chart-container" role="img" aria-label="Doughnut chart showing invested amount versus returns">
+          <canvas id="lumpsumChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content" aria-label="About lumpsum investment calculator">
+      <h2>What Is a Lumpsum Calculator?</h2>
+      <p>A lumpsum calculator is a financial tool that helps investors estimate the future value of a one-time investment. Unlike a Systematic Investment Plan (SIP) where you invest periodically, a lumpsum investment involves putting an entire amount into a mutual fund or other asset class at once. This calculator uses the compound interest formula — <strong>FV = P x (1 + r)^n</strong> — to project how your money will grow over a chosen period at an expected annual rate of return.</p>
+
+      <h3>How Does a Lumpsum Investment Work?</h3>
+      <p>When you make a lumpsum investment, your entire principal starts compounding from day one. The returns earned each year are reinvested, generating their own returns in subsequent years. This compounding effect can significantly amplify your wealth over longer investment horizons. For instance, an investment of Rs 5,00,000 at 12% annually would grow to approximately Rs 15,52,924 in just 10 years — nearly tripling your initial capital without any additional contributions.</p>
+
+      <h3>Benefits of Lumpsum Investing</h3>
+      <ul>
+        <li><strong>Full Compounding:</strong> The entire amount compounds from the start, maximising growth potential in rising markets.</li>
+        <li><strong>Simplicity:</strong> A single transaction makes portfolio management straightforward with no recurring commitments.</li>
+        <li><strong>Ideal for Windfalls:</strong> Perfect for deploying bonuses, inheritance, or proceeds from property sales efficiently.</li>
+        <li><strong>Lower Transaction Costs:</strong> Fewer transactions mean reduced brokerage and transaction fees over time.</li>
+      </ul>
+
+      <h3>When Should You Choose Lumpsum Over SIP?</h3>
+      <p>Lumpsum investments work best when you have a substantial amount of idle capital and the market valuations are reasonable. In prolonged bull markets, lumpsum typically outperforms SIP because the entire amount benefits from upward momentum. However, during volatile or declining markets, SIP offers rupee cost averaging that mitigates timing risk. Many financial advisors recommend a balanced approach — invest a portion as lumpsum during market corrections and route the remainder through SIP for disciplined, long-term wealth creation.</p>
+
+      <h3>Frequently Asked Questions</h3>
+      <h3>What is the minimum amount for a lumpsum mutual fund investment?</h3>
+      <p>Most mutual funds in India accept lumpsum investments starting from Rs 5,000, though some funds allow investments as low as Rs 1,000. The minimum amount varies by fund house and scheme category.</p>
+
+      <h3>Are lumpsum returns taxable?</h3>
+      <p>Yes. For equity mutual funds, short-term capital gains (held less than 1 year) are taxed at 15%, while long-term gains above Rs 1,00,000 are taxed at 10%. For debt funds, gains are taxed as per your income tax slab regardless of the holding period, following the 2023 amendment.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+    <nav aria-label="Footer navigation" style="margin-top:0.5rem;"><a href="/">Home</a><a href="/resources">Resources</a></nav>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script>
+    (function () {
+      const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+      const fmtCurrency = (v) => '\u20B9 ' + fmt.format(Math.round(v));
+
+      const amountInput = document.getElementById('investmentAmount');
+      const returnInput = document.getElementById('expectedReturn');
+      const periodInput = document.getElementById('investmentPeriod');
+
+      const amountDisplay = document.getElementById('investmentAmountDisplay');
+      const returnDisplay = document.getElementById('expectedReturnDisplay');
+      const periodDisplay = document.getElementById('investmentPeriodDisplay');
+
+      const totalInvestmentEl = document.getElementById('totalInvestment');
+      const estimatedReturnsEl = document.getElementById('estimatedReturns');
+      const totalValueEl = document.getElementById('totalValue');
+
+      // Chart setup
+      const ctx = document.getElementById('lumpsumChart').getContext('2d');
+      let chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Invested Amount', 'Estimated Returns'],
+          datasets: [{
+            data: [0, 0],
+            backgroundColor: ['#0044CC', '#FFB300'],
+            borderWidth: 0,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          cutout: '65%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 16,
+                usePointStyle: true,
+                pointStyleWidth: 10,
+                font: { family: "'Inter', sans-serif", size: 12, weight: '500' },
+                color: '#5a6068'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return context.label + ': ' + fmtCurrency(context.parsed);
+                }
+              }
+            }
+          }
+        }
+      });
+
+      function calculate() {
+        const P = parseFloat(amountInput.value) || 0;
+        const r = parseFloat(returnInput.value) / 100 || 0;
+        const n = parseInt(periodInput.value) || 0;
+
+        // Update ARIA
+        amountInput.setAttribute('aria-valuenow', P);
+        returnInput.setAttribute('aria-valuenow', returnInput.value);
+        periodInput.setAttribute('aria-valuenow', n);
+
+        // FV = P * (1 + r)^n
+        const futureValue = P * Math.pow(1 + r, n);
+        const returns = futureValue - P;
+
+        totalInvestmentEl.textContent = fmtCurrency(P);
+        estimatedReturnsEl.textContent = fmtCurrency(returns);
+        totalValueEl.textContent = fmtCurrency(futureValue);
+
+        // Update chart
+        chart.data.datasets[0].data = [P, returns];
+        chart.update();
+      }
+
+      function sync(idBase, val) {
+        if(val < 0) val = 0; // Prevent negative
+        const slider = document.getElementById(idBase);
+        const input = document.getElementById(idBase + '-input');
+        if (slider && input) {
+          slider.value = val;
+          input.value = val;
+        }
+        calculate();
+      }
+
+      [amountInput, returnInput, periodInput].forEach(slider => {
+        slider.addEventListener('input', (e) => sync(e.target.id, e.target.value));
+      });
+      document.querySelectorAll('.manual-input').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const idBase = e.target.id.replace('-input', '');
+          sync(idBase, e.target.value);
+        });
+      });
+
+      // Initial calculation
+      calculate();
+    })();
+  </script>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

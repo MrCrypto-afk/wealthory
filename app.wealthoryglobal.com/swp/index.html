@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWP Calculator | Sustainable Withdrawal Plan | Wealthory Global</title>
+  <meta name="description" content="Calculate your Systematic Withdrawal Plan (SWP) to generate a sustainable monthly income from your retirement corpus or windfall lump sum.">
+  <meta name="keywords" content="swp calculator, systematic withdrawal plan, retirement income, mutual fund swp, safe withdrawal rate">
+  <link rel="canonical" href="https://app.wealthoryglobal.com/swp">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does an SWP differ from a traditional annuity?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Unlike traditional annuities where you surrender your capital to an insurance company in exchange for a fixed pension, an SWP keeps your capital invested in mutual funds. Your money continues to compound, you can adjust withdrawal amounts at any time, and whatever is left can be passed on as an inheritance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a sustainable withdrawal rate in equity mutual funds?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In the Indian context, a sustainable withdrawal rate is generally considered to be between 4% to 6% annually of your initial corpus. This allows the remaining capital to grow at a rate that beats inflation while sustaining the payouts for 25-30 years."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home"><img src="/assets/logo.png" alt="Wealthory Logo" /></a>
+      <div class="nav-links">
+        <a href="/resources">Insights</a>
+        <a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>SWP Pension Planner</h1>
+      <p>Structure sustainable monthly cash flows from a lump-sum corpus and visualize the longevity of your fund.</p>
+    </div>
+
+    <div class="calc-layout">
+      <!-- Input Panel -->
+      <section class="calc-panel" aria-label="SWP calculator inputs">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><path d="M7 16l-4 4 4 4M21 4l-4-4-4 4"/></svg>
+          Withdrawal Details
+        </h2>
+
+        <div class="field">
+          <label for="initialCorpus">Total Initial Corpus <span class="input-wrapper">₹ <input type="number" class="manual-input" id="initialCorpusVal" value="10000000" min="100000" step="100000"></span></label>
+          <input type="range" id="initialCorpus" min="100000" max="100000000" step="100000" value="10000000" aria-label="Total initial corpus">
+        </div>
+
+        <div class="field">
+          <label for="monthlyWithdrawal">Monthly Withdrawal Amount <span class="input-wrapper">₹ <input type="number" class="manual-input" id="monthlyWithdrawalVal" value="50000" min="1000"></span></label>
+          <input type="range" id="monthlyWithdrawal" min="1000" max="500000" step="1000" value="50000" aria-label="Desired monthly withdrawal amount">
+        </div>
+
+        <div class="field">
+          <label for="expectedReturn">Expected Annual Return (%) <span class="input-wrapper"><input type="number" class="manual-input" id="expectedReturnVal" value="10" min="1" max="25" step="0.5"> %</span></label>
+          <input type="range" id="expectedReturn" min="1" max="25" step="0.5" value="10" aria-label="Expected annual return on remaining corpus">
+        </div>
+
+        <div class="field">
+          <label for="timeHorizon">Time Horizon <span class="input-wrapper"><input type="number" class="manual-input" id="timeHorizonVal" value="20" min="1" max="50"> Yr</span></label>
+          <input type="range" id="timeHorizon" min="1" max="50" step="1" value="20" aria-label="Withdrawal time horizon in years">
+        </div>
+      </section>
+
+      <!-- Results Panel -->
+      <section class="calc-panel" aria-label="Calculation results">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Fund Longevity
+        </h2>
+
+        <div id="depletionAlert" style="display:none; padding: 1rem; margin-bottom: 2rem; background: rgba(220, 38, 38, 0.1); border-left: 4px solid #DC2626; color: #FCA5A5; font-weight: 500; border-radius: 4px;">
+          Warning: Fund depletes completely before the target horizon.
+        </div>
+        
+        <div class="result-card" style="margin-bottom: 2rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02);">
+          <div class="result-label" style="color: var(--color-text);">Final Remaining Corpus</div>
+          <div class="result-value highlight" id="valFinalCorpus" style="font-size: 2.25rem;">--</div>
+        </div>
+
+        <div style="display:flex; justify-content:center; margin-bottom:2rem; padding:0 0.5rem; text-align: center;">
+          <div>
+            <div class="result-label">Total Amount Withdrawn Over Time</div>
+            <div class="result-value" style="font-size:1.5rem;" id="valTotalWithdrawn">--</div>
+          </div>
+        </div>
+
+        <div class="chart-container" style="margin-top:2rem;" aria-label="Corpus depletion timeline chart">
+          <canvas id="swpChart"></canvas>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content" aria-labelledby="seo-title">
+      <h2 id="seo-title">The Blueprint for Sustainable Income</h2>
+      <p>A Systematic Withdrawal Plan (SWP) allows you to automate a monthly cash flow from your mutual fund investments. It is heavily utilized by retirees and high-net-worth individuals to create a "synthetic pension" that is significantly more tax-efficient and flexible than traditional fixed-income products.</p>
+
+      <h3>Systematic Capital Liquidation Strategies</h3>
+      <p>In an SWP, units of your mutual fund are sold periodically to generate your required monthly income. Because the remaining units in your portfolio continue to participate in market growth, the overall value of your investment can actually increase over time, provided your withdrawal rate is lower than the annualized return rate of the fund.</p>
+
+      <h3>Inflation Safeguarding Rules</h3>
+      <p>The golden rule of SWP is the "Safe Withdrawal Rate." In Indian markets, drawing down 4% to 6% of your initial corpus annually ensures that the principal is largely protected and continues to grow at a rate that can absorb future inflation adjustments to your lifestyle.</p>
+
+      <h3>Frequently Asked Questions</h3>
+      <details>
+        <summary>How does an SWP differ from an traditional annuity?</summary>
+        <p>Unlike traditional annuities where you surrender your capital to an insurance company in exchange for a fixed pension, an SWP keeps your capital invested in mutual funds. Your money continues to compound, you can adjust withdrawal amounts at any time, and whatever is left can be passed on as an inheritance to your heirs.</p>
+      </details>
+      <details>
+        <summary>What happens if the market crashes?</summary>
+        <p>During a market crash, your SWP will sell a higher number of units to generate the same fixed monthly amount. This is the reverse of SIP rupee-cost averaging. To mitigate this "sequence of returns risk," it is highly recommended to route your SWP from a low-volatility Debt or Hybrid mutual fund, rather than a pure Equity fund.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+    <nav aria-label="Footer navigation" style="margin-top:0.5rem;"><a href="/">Home</a><a href="/resources">Resources</a></nav>
+  </footer>
+
+  <script>
+    (function () {
+      const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+      const fmtCurrency = (v) => '\u20B9 ' + fmt.format(v);
+
+      const inputs = {
+        initialCorpus: document.getElementById('initialCorpus'),
+        monthlyWithdrawal: document.getElementById('monthlyWithdrawal'),
+        expectedReturn: document.getElementById('expectedReturn'),
+        timeHorizon: document.getElementById('timeHorizon'),
+      };
+      const vals = {
+        initialCorpus: document.getElementById('initialCorpusVal'),
+        monthlyWithdrawal: document.getElementById('monthlyWithdrawalVal'),
+        expectedReturn: document.getElementById('expectedReturnVal'),
+        timeHorizon: document.getElementById('timeHorizonVal'),
+      };
+      
+      let chart = null;
+
+      function calculate() {
+        const initial = parseFloat(vals.initialCorpus.value) || 0;
+        const monthlyDraw = parseFloat(vals.monthlyWithdrawal.value) || 0;
+        const annualReturn = parseFloat(vals.expectedReturn.value) || 0;
+        const years = parseInt(vals.timeHorizon.value) || 0;
+
+        const monthlyRate = annualReturn / 12 / 100;
+        const totalMonths = years * 12;
+
+        let balance = initial;
+        let totalWithdrawn = 0;
+        
+        let chartLabels = [0];
+        let chartData = [initial];
+        let depleted = false;
+        let depletionMonth = 0;
+
+        for (let i = 1; i <= totalMonths; i++) {
+          if (balance <= 0) {
+            depleted = true;
+            if (depletionMonth === 0) depletionMonth = i;
+            break;
+          }
+          
+          balance = balance * (1 + monthlyRate);
+          
+          if (balance >= monthlyDraw) {
+            balance -= monthlyDraw;
+            totalWithdrawn += monthlyDraw;
+          } else {
+            totalWithdrawn += balance;
+            balance = 0;
+          }
+          
+          // Log data points yearly to keep chart clean
+          if (i % 12 === 0) {
+            chartLabels.push(i / 12);
+            chartData.push(balance);
+          }
+        }
+        
+        // Final state
+        if (totalMonths % 12 !== 0 && !depleted) {
+          chartLabels.push((totalMonths / 12).toFixed(1));
+          chartData.push(balance);
+        }
+
+        document.getElementById('valTotalWithdrawn').textContent = fmtCurrency(totalWithdrawn);
+        document.getElementById('valFinalCorpus').textContent = fmtCurrency(balance);
+        
+        const alertEl = document.getElementById('depletionAlert');
+        if (depleted) {
+          alertEl.style.display = 'block';
+          alertEl.textContent = `Warning: Fund depletes completely in Year ${(depletionMonth / 12).toFixed(1)} before the target horizon.`;
+          document.getElementById('valFinalCorpus').style.color = '#DC2626';
+        } else {
+          alertEl.style.display = 'none';
+          document.getElementById('valFinalCorpus').style.color = 'var(--color-primary)';
+        }
+
+        updateChart(chartLabels, chartData);
+      }
+
+      function updateChart(labels, data) {
+        const ctx = document.getElementById('swpChart').getContext('2d');
+        if (chart) chart.destroy();
+        
+        chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Remaining Corpus',
+              data: data,
+              borderColor: '#FFB300',
+              backgroundColor: 'rgba(255, 179, 0, 0.1)',
+              fill: true,
+              tension: 0.4,
+              borderWidth: 2,
+              pointRadius: 0,
+              pointHitRadius: 10
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  title: (ctx) => 'Year ' + ctx[0].label,
+                  label: (ctx) => fmtCurrency(ctx.raw)
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    if(value >= 10000000) return '₹' + (value/10000000).toFixed(1) + 'Cr';
+                    if(value >= 100000) return '₹' + (value/100000).toFixed(1) + 'L';
+                    return '₹' + value;
+                  },
+                  color: '#9CA3AF'
+                },
+                grid: { color: 'rgba(255,255,255,0.05)' }
+              },
+              x: {
+                title: { display: true, text: 'Years', color: '#9CA3AF' },
+                ticks: { color: '#9CA3AF' },
+                grid: { display: false }
+              }
+            }
+          }
+        });
+      }
+
+      function sync(idBase, val) {
+        let numericVal = parseFloat(val);
+        if(numericVal < 0) numericVal = 0;
+
+        const slider = document.getElementById(idBase);
+        const input = document.getElementById(idBase + 'Val');
+        if (slider && input) {
+          slider.value = numericVal;
+          input.value = numericVal;
+        }
+        calculate();
+      }
+
+      Object.keys(inputs).forEach(key => {
+        inputs[key].addEventListener('input', (e) => sync(key, e.target.value));
+        vals[key].addEventListener('input', (e) => sync(key, e.target.value));
+      });
+
+      calculate();
+    })();
+  </script>
+  
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

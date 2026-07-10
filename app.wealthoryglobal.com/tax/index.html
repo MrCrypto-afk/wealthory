@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income Tax Calculator 2025 – Old vs New Regime Comparison | Wealthory</title>
+  <meta name="description" content="Free income tax calculator for India FY 2025-26. Compare old vs new tax regime, estimate tax liability, and find which regime saves you more. Calculate now.">
+  <meta name="keywords" content="income tax calculator, old vs new tax regime, tax calculator India 2025, income tax estimator, tax slab calculator">
+  <link rel="canonical" href="https://app.wealthoryglobal.com/tax/">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between old and new tax regime in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The old tax regime allows deductions under sections like 80C, 80D, and HRA exemptions, with tax slabs of 0-2.5L (0%), 2.5-5L (5%), 5-10L (20%), and above 10L (30%). The new tax regime offers lower tax rates with slabs of 0-3L (0%), 3-6L (5%), 6-9L (10%), 9-12L (15%), 12-15L (20%), and above 15L (30%), but does not allow most deductions and exemptions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which tax regime is better – old or new?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The better regime depends on your deductions. If your total deductions (80C, 80D, HRA, etc.) are substantial—typically above Rs 3-4 lakh—the old regime may result in lower tax. If your deductions are minimal, the new regime with its lower slab rates is usually more beneficial. Use our calculator to compare both and find which saves you more."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What deductions are available under Section 80C?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Section 80C allows deductions up to Rs 1.5 lakh per financial year for investments in ELSS mutual funds, PPF, EPF, NSC, tax-saving fixed deposits, life insurance premiums, home loan principal repayment, Sukanya Samriddhi Yojana, and tuition fees for up to two children."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the income tax slabs for FY 2025-26?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Under the new regime for FY 2025-26: income up to Rs 3 lakh is tax-free, Rs 3-6 lakh is taxed at 5%, Rs 6-9 lakh at 10%, Rs 9-12 lakh at 15%, Rs 12-15 lakh at 20%, and income above Rs 15 lakh at 30%. Under the old regime: income up to Rs 2.5 lakh is tax-free, Rs 2.5-5 lakh is taxed at 5%, Rs 5-10 lakh at 20%, and income above Rs 10 lakh at 30%."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home"><img src="/assets/logo.png" alt="Wealthory Logo" /></a>
+      <div class="nav-links"><a href="/resources">Resources</a><a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>Income Tax Calculator</h1>
+      <p>Compare old and new tax regimes for FY 2025-26. Find which regime saves you more tax instantly.</p>
+    </div>
+
+    <div class="calc-layout">
+      <!-- Input Panel -->
+      <section class="calc-panel" aria-label="Income tax calculator inputs">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          Income Details
+        </h2>
+
+        <div class="field">
+          <label for="annualIncome">Annual Income <span class="input-wrapper">₹ <input type="number" class="manual-input" id="annualIncomeVal" value="1000000" min="0"></span></label>
+          <input type="range" id="annualIncome" min="0" max="50000000" value="1000000" step="50000" aria-label="Annual gross income">
+        </div>
+
+        <div class="field">
+          <label for="section80c">Section 80C Deductions <span class="input-wrapper">₹ <input type="number" class="manual-input" id="section80cVal" value="150000" min="0"></span></label>
+          <input type="range" id="section80c" min="0" max="150000" value="150000" step="5000" aria-label="Section 80C deductions">
+        </div>
+
+        <div class="field">
+          <label for="section80d">Section 80D (Health Insurance) <span class="input-wrapper">₹ <input type="number" class="manual-input" id="section80dVal" value="25000" min="0"></span></label>
+          <input type="range" id="section80d" min="0" max="100000" value="25000" step="5000" aria-label="Section 80D deductions">
+        </div>
+
+        <div class="field">
+          <label for="hraExemption">HRA Exemption <span class="input-wrapper">₹ <input type="number" class="manual-input" id="hraExemptionVal" value="0" min="0"></span></label>
+          <input type="range" id="hraExemption" min="0" max="500000" value="0" step="5000" aria-label="HRA exemption amount">
+        </div>
+      </section>
+
+      <!-- Results Panel -->
+      <section class="calc-panel" aria-label="Tax calculation results">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Tax Comparison
+        </h2>
+
+        <div class="tab-group" role="tablist" aria-label="Tax regime tabs">
+          <button class="tab-btn active" role="tab" id="tabOld" aria-selected="true" aria-controls="panelOld" data-tab="old">Old Regime</button>
+          <button class="tab-btn" role="tab" id="tabNew" aria-selected="false" aria-controls="panelNew" data-tab="new">New Regime</button>
+        </div>
+
+        <!-- Old Regime Panel -->
+        <div id="panelOld" role="tabpanel" aria-labelledby="tabOld">
+          <div class="result-card" style="margin-bottom: 1.5rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02);">
+            <div class="result-label" style="color: var(--color-text);">Tax Under Old Regime</div>
+            <div class="result-value highlight" id="taxOld" style="font-size: 2.25rem;">--</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem; padding:0 0.5rem;">
+            <div>
+              <div class="result-label">Taxable Income</div>
+              <div class="result-value" style="font-size:1.2rem;" id="taxableOld">--</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="result-label">Total Deductions</div>
+              <div class="result-value" style="font-size:1.2rem;" id="deductionsOld">--</div>
+            </div>
+          </div>
+          <div id="slabsOld"></div>
+        </div>
+
+        <!-- New Regime Panel -->
+        <div id="panelNew" role="tabpanel" aria-labelledby="tabNew" style="display:none;">
+          <div class="result-card" style="margin-bottom: 1.5rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02);">
+            <div class="result-label" style="color: var(--color-text);">Tax Under New Regime</div>
+            <div class="result-value highlight" id="taxNew" style="font-size: 2.25rem;">--</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem; padding:0 0.5rem;">
+            <div>
+              <div class="result-label">Taxable Income</div>
+              <div class="result-value" style="font-size:1.2rem;" id="taxableNew">--</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="result-label">Standard Deduction</div>
+              <div class="result-value" style="font-size:1.2rem;" id="deductionsNew">--</div>
+            </div>
+          </div>
+          <div id="slabsNew"></div>
+        </div>
+
+        <!-- Verdict -->
+        <div class="result-card" style="margin-top:1.5rem; border-left:3px solid #0044CC;">
+          <div class="result-label">Recommended Regime</div>
+          <div class="result-value highlight" id="verdict" style="font-size:1.5rem;">--</div>
+        </div>
+        <div style="display:flex; justify-content:center; margin-top:1rem; margin-bottom: 1rem; padding:0 0.5rem;">
+          <div style="text-align:center;">
+            <div class="result-label">Tax Saved by Choosing Better Regime</div>
+            <div class="result-value" style="font-size:1.2rem; color:#0044CC;" id="taxSaved">--</div>
+          </div>
+        </div>
+        <div id="lossAlert" class="alert-loss" style="display:none;"></div>
+
+        <div class="chart-container" aria-label="Old vs new regime tax comparison chart">
+          <canvas id="taxChart"></canvas>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content" aria-label="About income tax calculation">
+      <h2>Income Tax Calculator India 2025: Old vs New Regime</h2>
+      <p>Choosing between the old and new tax regimes is one of the most important financial decisions for salaried individuals and self-employed professionals in India. The new tax regime, introduced in Budget 2020 and significantly revised in subsequent budgets, offers lower tax slab rates but eliminates most deductions and exemptions. Our income tax calculator compares both regimes side by side so you can make an informed choice.</p>
+
+      <h3>Understanding the New Tax Regime Slabs</h3>
+      <p>The new tax regime for FY 2025-26 features a simplified slab structure: income up to Rs 3 lakh is exempt from tax, income between Rs 3-6 lakh is taxed at 5%, Rs 6-9 lakh at 10%, Rs 9-12 lakh at 15%, Rs 12-15 lakh at 20%, and any income above Rs 15 lakh is taxed at 30%. A standard deduction of Rs 75,000 is available under the new regime. This structure benefits individuals who do not have significant deductions to claim.</p>
+
+      <h3>When Should You Choose the Old Regime?</h3>
+      <p>The old tax regime is beneficial when your total deductions and exemptions exceed approximately Rs 3.75 lakh to Rs 4 lakh. This includes deductions under Section 80C (up to Rs 1.5 lakh for ELSS, PPF, EPF, etc.), Section 80D (health insurance premiums), HRA exemption for salaried individuals paying rent, home loan interest under Section 24, and NPS contributions under Section 80CCD. If you are a disciplined investor who maximizes these deductions every year, the old regime may save you significant tax.</p>
+
+      <h3>How to Use This Calculator</h3>
+      <p>Simply enter your annual gross income and your deduction amounts using the sliders. The calculator instantly computes your tax liability under both regimes, shows a slab-by-slab breakdown, and recommends the regime that results in the lowest tax. The doughnut chart provides a visual comparison, making it easy to understand the tax impact at a glance. Review the results and plan your investments accordingly to optimize your tax outflow.</p>
+
+      <ul>
+        <li>Compare both regimes before filing your ITR</li>
+        <li>Maximize Section 80C investments for old regime benefits</li>
+        <li>Consider health insurance under Section 80D for additional savings</li>
+        <li>Factor in HRA exemption if you live in rented accommodation</li>
+        <li>Consult a tax professional for complex income structures</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+    <nav aria-label="Footer navigation" style="margin-top:0.5rem;"><a href="/">Home</a><a href="/resources">Resources</a></nav>
+  </footer>
+
+  <script>
+    (function () {
+      const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+      const fmtCurrency = (v) => '\u20B9 ' + fmt.format(v);
+
+      // DOM refs
+      const inputs = {
+        annualIncome: document.getElementById('annualIncome'),
+        section80c: document.getElementById('section80c'),
+        section80d: document.getElementById('section80d'),
+        hraExemption: document.getElementById('hraExemption'),
+      };
+      const vals = {
+        annualIncome: document.getElementById('annualIncomeVal'),
+        section80c: document.getElementById('section80cVal'),
+        section80d: document.getElementById('section80dVal'),
+        hraExemption: document.getElementById('hraExemptionVal'),
+      };
+
+      let chart = null;
+
+      // Tax slab definitions
+      const newRegimeSlabs = [
+        { min: 0, max: 300000, rate: 0 },
+        { min: 300000, max: 600000, rate: 0.05 },
+        { min: 600000, max: 900000, rate: 0.10 },
+        { min: 900000, max: 1200000, rate: 0.15 },
+        { min: 1200000, max: 1500000, rate: 0.20 },
+        { min: 1500000, max: Infinity, rate: 0.30 },
+      ];
+
+      const oldRegimeSlabs = [
+        { min: 0, max: 250000, rate: 0 },
+        { min: 250000, max: 500000, rate: 0.05 },
+        { min: 500000, max: 1000000, rate: 0.20 },
+        { min: 1000000, max: Infinity, rate: 0.30 },
+      ];
+
+      function calculateTax(income, slabs) {
+        let tax = 0;
+        const breakdown = [];
+        for (const slab of slabs) {
+          if (income <= slab.min) {
+            breakdown.push({ ...slab, taxable: 0, tax: 0 });
+            continue;
+          }
+          const taxable = Math.min(income, slab.max) - slab.min;
+          const slabTax = taxable * slab.rate;
+          tax += slabTax;
+          breakdown.push({ ...slab, taxable, tax: slabTax });
+        }
+        return { tax, breakdown };
+      }
+
+      function formatSlabLabel(slab) {
+        if (slab.max === Infinity) {
+          return 'Above ' + fmtCurrency(slab.min);
+        }
+        return fmtCurrency(slab.min) + ' - ' + fmtCurrency(slab.max);
+      }
+
+      function renderSlabs(containerId, breakdown) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        breakdown.forEach(slab => {
+          if (slab.taxable <= 0) return;
+          const row = document.createElement('div');
+          row.className = 'result-row';
+          row.innerHTML = '<span class="label">' + formatSlabLabel(slab) + ' @ ' + (slab.rate * 100) + '%</span><span class="val">' + fmtCurrency(slab.tax) + '</span>';
+          container.appendChild(row);
+        });
+      }
+
+      function calculate() {
+        const income = parseInt(vals.annualIncome.value) || 0;
+        const ded80c = parseInt(vals.section80c.value) || 0;
+        const ded80d = parseInt(vals.section80d.value) || 0;
+        const hra = parseInt(vals.hraExemption.value) || 0;
+
+        // Old regime: apply deductions + standard deduction of 50,000
+        const oldStandardDed = 50000;
+        const totalDeductions = ded80c + ded80d + hra + oldStandardDed;
+        const taxableOld = Math.max(income - totalDeductions, 0);
+        const oldResult = calculateTax(taxableOld, oldRegimeSlabs);
+
+        // New regime: only standard deduction of 75,000
+        const newStandardDed = 75000;
+        const taxableNew = Math.max(income - newStandardDed, 0);
+        const newResult = calculateTax(taxableNew, newRegimeSlabs);
+
+        // Add 4% cess
+        const cessOld = oldResult.tax * 0.04;
+        const cessNew = newResult.tax * 0.04;
+        const totalTaxOld = oldResult.tax + cessOld;
+        const totalTaxNew = newResult.tax + cessNew;
+
+        // Update UI
+        document.getElementById('taxOld').textContent = fmtCurrency(totalTaxOld);
+        document.getElementById('taxableOld').textContent = fmtCurrency(taxableOld);
+        document.getElementById('deductionsOld').textContent = fmtCurrency(totalDeductions);
+        renderSlabs('slabsOld', oldResult.breakdown);
+
+        document.getElementById('taxNew').textContent = fmtCurrency(totalTaxNew);
+        document.getElementById('taxableNew').textContent = fmtCurrency(taxableNew);
+        document.getElementById('deductionsNew').textContent = fmtCurrency(newStandardDed);
+        renderSlabs('slabsNew', newResult.breakdown);
+
+        // Verdict
+        const saved = Math.abs(totalTaxOld - totalTaxNew);
+        const verdict = document.getElementById('verdict');
+        const taxSaved = document.getElementById('taxSaved');
+        const lossAlert = document.getElementById('lossAlert');
+
+        if (totalTaxOld < totalTaxNew) {
+          verdict.textContent = 'Old Regime Saves More';
+          taxSaved.textContent = fmtCurrency(saved);
+        } else if (totalTaxNew < totalTaxOld) {
+          verdict.textContent = 'New Regime Saves More';
+          taxSaved.textContent = fmtCurrency(saved);
+        } else {
+          verdict.textContent = 'Both Regimes Are Equal';
+          taxSaved.textContent = fmtCurrency(0);
+        }
+
+        if (saved > 0) {
+          lossAlert.style.display = 'flex';
+          lossAlert.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> You are losing ${fmtCurrency(saved)} if you choose the wrong regime!`;
+        } else {
+          lossAlert.style.display = 'none';
+        }
+
+        updateChart(totalTaxOld, totalTaxNew);
+      }
+
+      function updateChart(taxOld, taxNew) {
+        const ctx = document.getElementById('taxChart').getContext('2d');
+        if (chart) chart.destroy();
+        chart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Old Regime Tax', 'New Regime Tax'],
+            datasets: [{
+              data: [taxOld, taxNew],
+              backgroundColor: ['#0044CC', '#FFB300'],
+              borderWidth: 0,
+              hoverOffset: 6,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            cutout: '65%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  font: { family: "'Inter', sans-serif", size: 12, weight: '500' },
+                  color: '#5a6068',
+                  padding: 16,
+                  usePointStyle: true,
+                  pointStyleWidth: 10,
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (ctx) {
+                    return ctx.label + ': ' + fmtCurrency(ctx.parsed);
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Tab switching
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-selected', 'true');
+
+          const tab = this.dataset.tab;
+          document.getElementById('panelOld').style.display = tab === 'old' ? 'block' : 'none';
+          document.getElementById('panelNew').style.display = tab === 'new' ? 'block' : 'none';
+        });
+      });
+
+      // Bind events and sync inputs
+      Object.keys(inputs).forEach(key => {
+        // Sync range to manual input
+        inputs[key].addEventListener('input', (e) => {
+          let val = Math.max(0, e.target.value);
+          vals[key].value = val;
+          calculate();
+        });
+        
+        // Sync manual input to range
+        vals[key].addEventListener('input', (e) => {
+          let val = Math.max(0, e.target.value);
+          inputs[key].value = val;
+          calculate();
+        });
+      });
+
+      // Initial calculation
+      calculate();
+    })();
+  </script>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

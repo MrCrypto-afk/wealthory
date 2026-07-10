@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cost of Delay Calculator | Wealthory Global</title>
+  <meta name="description" content="Calculate the shocking opportunity cost of delaying your investments. See how much wealth you lose by waiting just one year.">
+  <meta name="keywords" content="cost of delay calculator, investment delay cost, compounding interest loss, wait to invest, wealth accumulation">
+  <link rel="canonical" href="https://app.wealthoryglobal.com/cost-of-delay">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why does a 1-year delay cost so much over 25 years?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The magic of compounding happens in the later years. When you delay investing by one year today, you aren't losing the returns of your first year—you are losing the massive compounded returns of your final year, which are exponentially larger."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home"><img src="/assets/logo.png" alt="Wealthory Logo" /></a>
+      <div class="nav-links">
+        <a href="/resources">Insights</a>
+        <a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>Cost of Delay Calculator</h1>
+      <p>Time is your greatest asset. Calculate the shocking wealth destruction caused by waiting to invest.</p>
+    </div>
+
+    <div class="calc-layout">
+      <!-- Input Panel -->
+      <section class="calc-panel" aria-label="Cost of delay calculator inputs">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Investment Details
+        </h2>
+
+        <div class="field">
+          <label for="monthlyInvestment">Target Monthly Investment <span class="input-wrapper">₹ <input type="number" class="manual-input" id="monthlyInvestmentVal" value="10000" min="500"></span></label>
+          <input type="range" id="monthlyInvestment" min="500" max="100000" step="500" value="10000" aria-label="Target monthly investment">
+        </div>
+
+        <div class="field">
+          <label for="expectedReturn">Expected Annual Return (%) <span class="input-wrapper"><input type="number" class="manual-input" id="expectedReturnVal" value="12" min="1" max="30" step="0.5"> %</span></label>
+          <input type="range" id="expectedReturn" min="1" max="30" step="0.5" value="12" aria-label="Expected annual return rate">
+        </div>
+
+        <div class="field">
+          <label for="totalHorizon">Total Investment Horizon <span class="input-wrapper"><input type="number" class="manual-input" id="totalHorizonVal" value="25" min="5" max="50"> Yr</span></label>
+          <input type="range" id="totalHorizon" min="5" max="50" step="1" value="25" aria-label="Total investment horizon in years">
+        </div>
+
+        <div class="field">
+          <label for="delayPeriod">Delay Period (Years) <span class="input-wrapper"><input type="number" class="manual-input" id="delayPeriodVal" value="3" min="1" max="20"> Yr</span></label>
+          <input type="range" id="delayPeriod" min="1" max="20" step="1" value="3" aria-label="Delay period before starting">
+        </div>
+      </section>
+
+      <!-- Results Panel -->
+      <section class="calc-panel" aria-label="Calculation results">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          The Impact of Waiting
+        </h2>
+
+        <div class="result-card" style="margin-bottom:2rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02);">
+          <div class="result-label" style="color: var(--color-text);">Total Cost of Delay (Lost Wealth)</div>
+          <div class="result-value highlight" id="valCostOfDelay" style="font-size: 2.25rem;">--</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:2rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">If Started Today</div>
+            <div class="result-value" style="font-size:1.3rem;" id="valStartToday">--</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">If Delayed</div>
+            <div class="result-value" style="font-size:1.3rem;" id="valStartLater">--</div>
+          </div>
+        </div>
+
+        <div class="chart-container" style="margin-top:2rem;" aria-label="Cost of delay comparison chart">
+          <canvas id="delayChart"></canvas>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content" aria-labelledby="seo-title">
+      <h2 id="seo-title">The Hidden Cost of Procrastination</h2>
+      <p>When it comes to wealth creation, time is a far more powerful lever than capital. The "Cost of Delay" is the massive opportunity cost incurred when you postpone investing. Because compound interest acts as an exponential curve, chopping off the final years of your investment horizon destroys the most lucrative segment of your wealth accumulation.</p>
+
+      <h3>Why does a 1-year delay cost so much over 25 years?</h3>
+      <p>A common misconception is that if you delay investing by one year, you only lose the first year's returns. In reality, you are losing the <strong>last year's</strong> compounded returns. The magic of compounding happens in the later years. When your money doubles, the absolute value of that doubling is exponentially larger in year 25 than in year 1. Delaying by one year pushes your entire wealth curve backward.</p>
+
+      <h3>The Mechanics of Compound Interest</h3>
+      <p>To understand the severe impact of delaying, look at the math. If you invest ₹10,000 per month at 12% for 20 years, your corpus will be approximately ₹1 Crore. But if you invest for 25 years, it becomes ₹1.9 Crores. That 5-year difference didn't just add a few lakhs—it nearly doubled the entire portfolio size.</p>
+
+      <details style="margin-top:2rem;">
+        <summary>How can I recover from a delayed start?</summary>
+        <p>The only mathematical way to bridge the gap caused by a delayed start is to significantly increase your monthly investment amount (via a Step-Up SIP) or aggressively seek higher-yield assets. However, both approaches require either sacrificing more current income or taking on substantially higher risk.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+    <nav aria-label="Footer navigation" style="margin-top:0.5rem;"><a href="/">Home</a><a href="/resources">Resources</a></nav>
+  </footer>
+
+  <script>
+    (function () {
+      const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+      const fmtCurrency = (v) => '\u20B9 ' + fmt.format(v);
+
+      const inputs = {
+        monthlyInvestment: document.getElementById('monthlyInvestment'),
+        expectedReturn: document.getElementById('expectedReturn'),
+        totalHorizon: document.getElementById('totalHorizon'),
+        delayPeriod: document.getElementById('delayPeriod'),
+      };
+      const vals = {
+        monthlyInvestment: document.getElementById('monthlyInvestmentVal'),
+        expectedReturn: document.getElementById('expectedReturnVal'),
+        totalHorizon: document.getElementById('totalHorizonVal'),
+        delayPeriod: document.getElementById('delayPeriodVal'),
+      };
+      
+      let chart = null;
+
+      function calculateFV(P, r_annual, years) {
+        if (years <= 0) return 0;
+        const r = r_annual / 12 / 100;
+        const n = years * 12;
+        if (r === 0) return P * n;
+        return P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+      }
+
+      function calculate() {
+        const P = parseFloat(vals.monthlyInvestment.value) || 0;
+        const R = parseFloat(vals.expectedReturn.value) || 0;
+        const totalHorizon = parseInt(vals.totalHorizon.value) || 0;
+        const delay = parseInt(vals.delayPeriod.value) || 0;
+
+        // Ensure delay is not greater than horizon
+        const effectiveDelay = Math.min(delay, totalHorizon);
+        const delayedHorizon = totalHorizon - effectiveDelay;
+
+        const fvStartToday = calculateFV(P, R, totalHorizon);
+        const fvStartLater = calculateFV(P, R, delayedHorizon);
+        const costOfDelay = fvStartToday - fvStartLater;
+
+        document.getElementById('valStartToday').textContent = fmtCurrency(fvStartToday);
+        document.getElementById('valStartLater').textContent = fmtCurrency(fvStartLater);
+        document.getElementById('valCostOfDelay').textContent = fmtCurrency(costOfDelay);
+
+        updateChart(fvStartToday, fvStartLater);
+      }
+
+      function updateChart(startToday, startLater) {
+        const ctx = document.getElementById('delayChart').getContext('2d');
+        if (chart) chart.destroy();
+        
+        chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Started Today', 'Started Later'],
+            datasets: [{
+              label: 'Final Wealth Corpus',
+              data: [startToday, startLater],
+              backgroundColor: ['#0044CC', '#2C3035'],
+              borderRadius: 4,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => fmtCurrency(ctx.raw)
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    if(value >= 10000000) return '₹' + (value/10000000).toFixed(1) + 'Cr';
+                    if(value >= 100000) return '₹' + (value/100000).toFixed(1) + 'L';
+                    return '₹' + value;
+                  },
+                  color: '#9CA3AF'
+                },
+                grid: { color: 'rgba(255,255,255,0.05)' }
+              },
+              x: {
+                ticks: { color: '#9CA3AF', font: { size: 14 } },
+                grid: { display: false }
+              }
+            }
+          }
+        });
+      }
+
+      function sync(idBase, val) {
+        let numericVal = parseFloat(val);
+        if(numericVal < 0) numericVal = 0;
+        
+        // Ensure delay is not greater than horizon
+        if (idBase === 'delayPeriod') {
+          const maxDelay = parseInt(inputs.totalHorizon.value);
+          if (numericVal >= maxDelay) numericVal = maxDelay - 1;
+        }
+        if (idBase === 'totalHorizon') {
+          const delayVal = parseInt(inputs.delayPeriod.value);
+          if (numericVal <= delayVal) numericVal = delayVal + 1;
+        }
+
+        const slider = document.getElementById(idBase);
+        const input = document.getElementById(idBase + 'Val');
+        if (slider && input) {
+          slider.value = numericVal;
+          input.value = numericVal;
+        }
+        calculate();
+      }
+
+      Object.keys(inputs).forEach(key => {
+        inputs[key].addEventListener('input', (e) => sync(key, e.target.value));
+        vals[key].addEventListener('input', (e) => sync(key, e.target.value));
+      });
+
+      calculate();
+    })();
+  </script>
+  
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

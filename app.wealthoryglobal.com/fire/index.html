@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIRE Calculator (Financial Independence, Retire Early) | Wealthory</title>
+  <meta name="description" content="Calculate your FIRE number (Financial Independence, Retire Early). Estimate the corpus needed to retire early and the SIP required to achieve it.">
+  <meta name="keywords" content="FIRE calculator, early retirement calculator, financial independence, retire early, FIRE number, safe withdrawal rate">
+  <link rel="canonical" href="https://app.wealthoryglobal.com/fire/">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home"><img src="/assets/logo.png" alt="Wealthory Logo" /></a>
+      <div class="nav-links"><a href="https://admin.wealthoryglobal.com" class="nav-utility">Advisor Login</a><a href="/resources">Insights</a><a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>FIRE Calculator (Financial Independence, Retire Early)</h1>
+      <p>Discover your FIRE number. Estimate the exact corpus needed to retire early and the monthly investments required to reach it.</p>
+    </div>
+
+    <div class="calc-layout">
+      <!-- Input Panel -->
+      <section class="calc-panel" aria-label="FIRE calculator inputs">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Your Journey to FIRE
+        </h2>
+
+        <div class="field">
+          <label for="currentAge">Current Age <span class="input-wrapper"><input type="number" class="manual-input" id="currentAgeVal" value="30" min="0" max="100"> Yr</span></label>
+          <input type="range" id="currentAge" min="18" max="60" value="30" aria-label="Current age">
+        </div>
+
+        <div class="field">
+          <label for="fireAge">Target FIRE Age <span class="input-wrapper"><input type="number" class="manual-input" id="fireAgeVal" value="45" min="0" max="100"> Yr</span></label>
+          <input type="range" id="fireAge" min="30" max="65" value="45" aria-label="Target FIRE age">
+        </div>
+
+        <div class="field">
+          <label for="monthlyExpense">Monthly Expenses <span class="input-wrapper">₹ <input type="number" class="manual-input" id="monthlyExpenseVal" value="60000" min="0"></span></label>
+          <input type="range" id="monthlyExpense" min="10000" max="500000" value="60000" step="5000" aria-label="Monthly expenses">
+        </div>
+
+        <div class="field">
+          <label for="currentSavings">Current Savings/Investments <span class="input-wrapper">₹ <input type="number" class="manual-input" id="currentSavingsVal" value="1000000" min="0"></span></label>
+          <input type="range" id="currentSavings" min="0" max="50000000" value="1000000" step="100000" aria-label="Current Savings">
+        </div>
+
+        <div class="field">
+          <label for="expectedReturn">Expected Return (% p.a.) <span class="input-wrapper"><input type="number" class="manual-input" id="expectedReturnVal" value="12" min="0" step="0.5"> %</span></label>
+          <input type="range" id="expectedReturn" min="1" max="20" value="12" step="0.5" aria-label="Expected annual return percentage">
+        </div>
+
+        <div class="field">
+          <label for="inflationRate">Inflation Rate (% p.a.) <span class="input-wrapper"><input type="number" class="manual-input" id="inflationRateVal" value="6" min="0" step="0.5"> %</span></label>
+          <input type="range" id="inflationRate" min="1" max="12" value="6" step="0.5" aria-label="Expected annual inflation rate">
+        </div>
+      </section>
+
+      <!-- Results Panel -->
+      <section class="calc-panel" aria-label="FIRE calculation results">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Your FIRE Blueprint
+        </h2>
+
+        <div class="result-card" style="margin-bottom: 2rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02);">
+          <div class="result-label" style="color: var(--color-text);">Target FIRE Corpus (FIRE Number)</div>
+          <div class="result-value highlight" id="resultCorpus" style="font-size: 2.25rem;">--</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label" style="color: #FFB300;">Monthly SIP Needed</div>
+            <div class="result-value" style="font-size:1.3rem;" id="resultSIP">--</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">Future Savings Value</div>
+            <div class="result-value" style="font-size:1.3rem;" id="resultSavingsGrowth">--</div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:2rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">Future Monthly Expense</div>
+            <div class="result-value" style="font-size:1.1rem; color:var(--color-text-muted);" id="resultExpense">--</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">Years to FIRE</div>
+            <div class="result-value" style="font-size:1.1rem; color:var(--color-text-muted);" id="resultYears">--</div>
+          </div>
+        </div>
+
+        <div class="chart-container" aria-label="FIRE Corpus Composition Chart">
+          <canvas id="fireChart"></canvas>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content" aria-label="About FIRE planning">
+      <h2>Financial Independence, Retire Early (FIRE) Calculator</h2>
+      <p>The FIRE movement is about gaining the financial freedom to choose how you spend your time, rather than working out of necessity until traditional retirement age. To achieve this, you need to reach your "FIRE Number" — a corpus large enough to sustain your lifestyle indefinitely through passive income.</p>
+
+      <details>
+        <summary>What is the FIRE Number and the 25x Rule?</summary>
+        <div class="details-content">
+          <p>Your FIRE Number is the total investment corpus required to generate enough passive income to cover your living expenses. A universally accepted rule of thumb in the FIRE community is the <strong>25x Rule</strong>, which states you need 25 times your annual expenses saved. This is derived from the <strong>4% Safe Withdrawal Rate (SWR)</strong> — the theory that if you withdraw 4% of your portfolio in the first year of retirement and adjust for inflation thereafter, your money will last indefinitely.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Why does this calculator factor in Inflation?</summary>
+        <div class="details-content">
+          <p>If you plan to FIRE in 10 or 15 years, your expenses will not be the same as they are today. At an average Indian inflation rate of 6%, an expense of Rs 50,000 per month today will double in roughly 12 years. Our calculator first inflates your current expenses to their future equivalent at your target FIRE age, and then calculates the 25x corpus based on that future expense. This ensures your FIRE plan is robust and realistic.</p>
+        </div>
+      </details>
+      
+      <details>
+        <summary>How does my current savings affect my SIP?</summary>
+        <div class="details-content">
+          <p>If you already have investments, they will continue to compound until your FIRE age. The calculator projects the future value of your current savings and subtracts it from your Target FIRE Corpus. The remaining amount (the shortfall) determines the monthly SIP you need to start today. The larger your current savings, the smaller your required SIP.</p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="compliance-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p><strong>Risk Warning:</strong> Mutual fund investments are subject to market risks, read all scheme related documents carefully. The calculators provided on this platform are for illustrative purposes only and do not constitute financial advice. Past performance is not indicative of future returns.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+      const fmtCurrency = (v) => '\u20B9 ' + fmt.format(v);
+
+      // DOM refs
+      const inputs = {
+        currentAge: document.getElementById('currentAge'),
+        fireAge: document.getElementById('fireAge'),
+        monthlyExpense: document.getElementById('monthlyExpense'),
+        currentSavings: document.getElementById('currentSavings'),
+        expectedReturn: document.getElementById('expectedReturn'),
+        inflationRate: document.getElementById('inflationRate'),
+      };
+      
+      const vals = {
+        currentAge: document.getElementById('currentAgeVal'),
+        fireAge: document.getElementById('fireAgeVal'),
+        monthlyExpense: document.getElementById('monthlyExpenseVal'),
+        currentSavings: document.getElementById('currentSavingsVal'),
+        expectedReturn: document.getElementById('expectedReturnVal'),
+        inflationRate: document.getElementById('inflationRateVal'),
+      };
+      
+      const results = {
+        corpus: document.getElementById('resultCorpus'),
+        sip: document.getElementById('resultSIP'),
+        expense: document.getElementById('resultExpense'),
+        years: document.getElementById('resultYears'),
+        savingsGrowth: document.getElementById('resultSavingsGrowth'),
+      };
+
+      let chart = null;
+
+      function calculate() {
+        // Read from manual inputs
+        const currentAge = parseInt(vals.currentAge.value) || 0;
+        const fireAge = parseInt(vals.fireAge.value) || 0;
+        const monthlyExpense = parseInt(vals.monthlyExpense.value) || 0;
+        const currentSavings = parseInt(vals.currentSavings.value) || 0;
+        const expectedReturn = parseFloat(vals.expectedReturn.value) / 100 || 0;
+        const inflationRate = parseFloat(vals.inflationRate.value) / 100 || 0;
+
+        const yearsToFIRE = Math.max(fireAge - currentAge, 0);
+
+        if (yearsToFIRE === 0) {
+          results.corpus.textContent = '--';
+          results.sip.textContent = '--';
+          results.expense.textContent = '--';
+          results.years.textContent = '0 years';
+          results.savingsGrowth.textContent = '--';
+          if(chart) chart.destroy();
+          return;
+        }
+
+        // 1. Future monthly expense
+        const inflatedMonthlyExpense = monthlyExpense * Math.pow(1 + inflationRate, yearsToFIRE);
+        const inflatedAnnualExpense = inflatedMonthlyExpense * 12;
+
+        // 2. FIRE Target Corpus (25x Rule)
+        const targetCorpus = inflatedAnnualExpense * 25;
+
+        // 3. Future Value of Current Savings
+        const futureSavings = currentSavings * Math.pow(1 + expectedReturn, yearsToFIRE);
+
+        // 4. Shortfall to be met via SIP
+        const shortfall = Math.max(targetCorpus - futureSavings, 0);
+
+        // 5. Monthly SIP needed for shortfall
+        const monthlyReturn = expectedReturn / 12;
+        const totalMonths = yearsToFIRE * 12;
+        
+        let sip = 0;
+        if (shortfall > 0) {
+          if (monthlyReturn <= 0) {
+            sip = shortfall / totalMonths;
+          } else {
+            sip = shortfall * monthlyReturn / (Math.pow(1 + monthlyReturn, totalMonths) - 1);
+          }
+        }
+
+        // Update results
+        results.corpus.textContent = fmtCurrency(targetCorpus);
+        results.sip.textContent = fmtCurrency(sip);
+        results.savingsGrowth.textContent = fmtCurrency(futureSavings);
+        results.expense.textContent = fmtCurrency(inflatedMonthlyExpense) + '/month';
+        results.years.textContent = yearsToFIRE + ' years';
+
+        // Calculate Future Value of SIPs for the chart
+        const futureSIPValue = shortfall;
+        updateChart(futureSavings, futureSIPValue);
+      }
+
+      function updateChart(savingsCompounded, sipCompounded) {
+        const ctx = document.getElementById('fireChart').getContext('2d');
+        if (chart) chart.destroy();
+        chart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Corpus from Current Savings', 'Corpus from Future SIPs'],
+            datasets: [{
+              data: [savingsCompounded, sipCompounded],
+              backgroundColor: ['#0044CC', '#FFB300'],
+              borderWidth: 0,
+              hoverOffset: 6,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            cutout: '65%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  font: { family: "'Inter', sans-serif", size: 12, weight: '500' },
+                  color: '#5a6068',
+                  padding: 16,
+                  usePointStyle: true,
+                  pointStyleWidth: 10,
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (ctx) {
+                    return ctx.label + ': ' + fmtCurrency(ctx.parsed);
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Bind events and sync inputs
+      Object.keys(inputs).forEach(key => {
+        // Sync range to manual input
+        inputs[key].addEventListener('input', (e) => {
+          let val = Math.max(0, e.target.value);
+          vals[key].value = val;
+          calculate();
+        });
+        
+        // Sync manual input to range
+        vals[key].addEventListener('input', (e) => {
+          let val = Math.max(0, e.target.value);
+          inputs[key].value = val;
+          calculate();
+        });
+      });
+
+      // Initial calculation
+      calculate();
+    })();
+  </script>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

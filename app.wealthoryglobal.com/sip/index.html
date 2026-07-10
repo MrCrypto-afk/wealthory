@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIP & Step-Up Calculator | Wealthory Global</title>
+  <meta name="description" content="Calculate your mutual fund returns with our advanced SIP and Step-Up Calculator. Plan your financial future with precision." />
+  <link rel="canonical" href="https://app.wealthoryglobal.com/sip" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is a Step-Up SIP?", "acceptedAnswer": { "@type": "Answer", "text": "A Step-Up SIP allows you to automatically increase your monthly investment amount by a specific percentage every year, compounding your wealth much faster as your income grows." } },
+      { "@type": "Question", "name": "How does compounding work in mutual funds?", "acceptedAnswer": { "@type": "Answer", "text": "Compounding in mutual funds means you earn returns not just on your principal investment, but also on the accumulated returns of previous periods. Over long periods, this causes your wealth to grow exponentially." } }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home">
+        <img src="/assets/logo.png" alt="Wealthory Logo" />
+      </a>
+      <div class="nav-links">
+        <a href="https://admin.wealthoryglobal.com" class="nav-utility">Advisor Login</a>
+        <a href="/resources">Insights</a>
+        <a href="/" class="nav-cta">All Tools</a>
+      
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>SIP & Step-Up Calculator</h1>
+      <p>Model the exponential growth of your capital through disciplined, escalating monthly investments.</p>
+    </div>
+
+    <div class="calc-layout">
+      <!-- Input Panel -->
+      <div class="calc-panel">
+        <div class="field">
+          <label for="monthly-inv"><span>Monthly Investment</span> <span class="input-wrapper">₹ <input type="number" class="manual-input" id="monthly-inv-input" value="10000" min="0"></span></label>
+          <input type="range" id="monthly-inv" min="500" max="100000" step="500" value="10000" aria-label="Monthly Investment Amount" />
+        </div>
+        <div class="field">
+          <label for="return-rate"><span>Expected Return (p.a)</span> <span class="input-wrapper"><input type="number" class="manual-input" id="return-rate-input" value="12" min="0" max="50" step="0.5"> %</span></label>
+          <input type="range" id="return-rate" min="1" max="30" step="0.5" value="12" aria-label="Expected Annual Return Rate" />
+        </div>
+        <div class="field">
+          <label for="period"><span>Time Period</span> <span class="input-wrapper"><input type="number" class="manual-input" id="period-input" value="10" min="0" max="50"> Yr</span></label>
+          <input type="range" id="period" min="1" max="40" step="1" value="10" aria-label="Investment Period in Years" />
+        </div>
+        <div class="field">
+          <label for="step-up"><span>Annual Step-Up</span> <span class="input-wrapper"><input type="number" class="manual-input" id="step-up-input" value="10" min="0" max="100"> %</span></label>
+          <input type="range" id="step-up" min="0" max="25" step="1" value="10" aria-label="Annual Step-Up Percentage" />
+        </div>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="calc-panel">
+        <div class="result-card">
+          <div class="result-label">Total Value</div>
+          <div class="result-value highlight" id="res-total">₹0</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">Invested</div>
+            <div class="result-value" style="font-size:1.25rem;" id="res-invested">₹0</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">Wealth Gain</div>
+            <div class="result-value" style="font-size:1.25rem;" id="res-gain">₹0</div>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="calcChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic SEO Hub -->
+    <section class="seo-content" aria-labelledby="seo-title">
+      <h2 id="seo-title">The Mechanics of Wealth Accumulation</h2>
+      <p>Systematic Investment Plans (SIPs) leverage the mathematical phenomenon of compounding to transform incremental capital allocations into significant long-term wealth. By integrating an annual Step-Up, investors can align their portfolio growth with career income progression.</p>
+      
+      <h3>How does compounding work?</h3>
+      <p>Compounding occurs when the returns generated by an investment begin generating their own returns. Instead of simply growing linearly, your wealth curve becomes exponential. In a standard mutual fund SIP, this compounding effect is heavily back-loaded, meaning the vast majority of wealth creation occurs in the final years of the investment horizon.</p>
+      
+      <h3>The SIP Formula Architecture</h3>
+      <div class="formula-box">
+        <strong>Future Value (FV) = P × [((1+r)<sup>n</sup> - 1) / r] × (1+r)</strong><br><br>
+        <span style="font-size:0.9rem; color:var(--color-text-muted);">
+        Where:<br>
+        <strong>P</strong> = Monthly SIP Amount<br>
+        <strong>r</strong> = Monthly Rate of Return (Annual Rate / 12 / 100)<br>
+        <strong>n</strong> = Total Number of Months
+        </span>
+      </div>
+
+      <h3>Frequently Asked Questions</h3>
+      <details>
+        <summary>What is a Step-Up SIP?</summary>
+        <p>A Step-Up SIP is an advanced investment strategy where the monthly contribution automatically increases by a fixed percentage annually. This combats inflation and accelerates the compounding curve by injecting higher capital volumes as your earning capacity grows.</p>
+      </details>
+      <details>
+        <summary>Why is a 12% return expectation standard in India?</summary>
+        <p>Historically, broad-market Indian equities (like the Nifty 50) have delivered long-term annualized returns in the 12% to 14% range, absorbing inflation while providing real alpha. However, past performance is not a strict guarantee of future results.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="compliance-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p><strong>Risk Warning:</strong> Mutual fund investments are subject to market risks, read all scheme related documents carefully. The calculators provided on this platform are for illustrative purposes only and do not constitute financial advice. Past performance is not indicative of future returns.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+          <a href="/grievance">Grievance Redressal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const fmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    let chart;
+
+    function initChart() {
+      const ctx = document.getElementById('calcChart').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: ['Invested Amount', 'Wealth Gain'], datasets: [{ data: [50, 50], backgroundColor: ['#0044cc', '#ffb300'], borderWidth: 0 }] },
+        options: { cutout: '75%', plugins: { legend: { display: false } } }
+      });
+    }
+
+    function calculate() {
+      let P = parseFloat(document.getElementById('monthly-inv-input').value) || 0;
+      let R = parseFloat(document.getElementById('return-rate-input').value) || 0;
+      let years = parseInt(document.getElementById('period-input').value) || 0;
+      let stepUp = parseFloat(document.getElementById('step-up-input').value) || 0;
+      stepUp = stepUp / 100;
+      
+      let totalInvested = 0;
+      let totalValue = 0;
+      let monthlyRate = R / 12 / 100;
+
+      for (let y = 1; y <= years; y++) {
+        for (let m = 1; m <= 12; m++) {
+          totalInvested += P;
+          totalValue = (totalValue + P) * (1 + monthlyRate);
+        }
+        P = P * (1 + stepUp); // Apply step up at end of year
+      }
+
+      const gain = totalValue - totalInvested;
+
+      document.getElementById('res-invested').textContent = fmt.format(totalInvested);
+      document.getElementById('res-gain').textContent = fmt.format(gain);
+      document.getElementById('res-total').textContent = fmt.format(totalValue);
+
+      chart.data.datasets[0].data = [totalInvested, gain];
+      chart.update();
+    }
+
+    function sync(idBase, val) {
+      if(val < 0) val = 0; // Prevent negative
+      const slider = document.getElementById(idBase);
+      const input = document.getElementById(idBase + '-input');
+      if (slider && input) {
+        slider.value = val;
+        input.value = val;
+      }
+      calculate();
+    }
+
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      slider.addEventListener('input', (e) => sync(e.target.id, e.target.value));
+    });
+    document.querySelectorAll('.manual-input').forEach(input => {
+      input.addEventListener('input', (e) => {
+        const idBase = e.target.id.replace('-input', '');
+        sync(idBase, e.target.value);
+      });
+    });
+
+    window.onload = () => { initChart(); calculate(); };
+  </script>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

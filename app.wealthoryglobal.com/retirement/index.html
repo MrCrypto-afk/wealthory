@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retirement Calculator India – Plan Your Retirement Corpus | Wealthory</title>
+  <meta name="description" content="Free retirement calculator for India. Estimate your retirement corpus, inflation-adjusted expenses, and monthly SIP needed. Start planning your retirement today.">
+  <meta name="keywords" content="retirement calculator India, retirement planning, retirement corpus calculator, SIP for retirement, retirement fund calculator">
+  <link rel="canonical" href="https://app.wealthoryglobal.com/retirement/">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much corpus do I need for retirement in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your retirement corpus depends on your monthly expenses, expected inflation rate, years until retirement, and the duration of retirement. A common rule of thumb is to accumulate 25 to 30 times your annual expenses at the time of retirement. Use our retirement calculator to get a personalized estimate based on your specific financial situation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the 4% rule in retirement planning?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The 4% rule suggests that you can withdraw 4% of your retirement corpus annually without running out of money over a 25-30 year retirement. This means you need approximately 25 times your annual expenses as your retirement corpus. However, this rule was designed for US markets—Indian investors should adjust for higher inflation rates and different return expectations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does inflation affect retirement planning?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Inflation erodes the purchasing power of money over time. If your current monthly expense is Rs 50,000 and inflation averages 6% per year, after 25 years you would need approximately Rs 2.15 lakh per month to maintain the same lifestyle. This makes it critical to factor inflation into your retirement corpus calculation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much SIP is needed for retirement?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The SIP amount depends on your target corpus, investment horizon, and expected rate of return. Starting early allows you to leverage the power of compounding, requiring a significantly smaller monthly SIP. For example, a 25-year-old targeting a Rs 5 crore corpus by age 60 at 12% returns would need approximately Rs 10,000-15,000 per month, while a 35-year-old would need nearly Rs 35,000-40,000 per month for the same goal."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home"><img src="/assets/logo.png" alt="Wealthory Logo" /></a>
+      <div class="nav-links"><a href="/resources">Resources</a><a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>Retirement Planner</h1>
+      <p>Estimate your retirement corpus, inflation-adjusted expenses, and the monthly SIP you need to start today.</p>
+    </div>
+
+    <div class="calc-layout">
+      <!-- Input Panel -->
+      <section class="calc-panel" aria-label="Retirement calculator inputs">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Your Details
+        </h2>
+
+        <div class="field">
+          <label for="currentAge">Current Age <span class="input-wrapper"><input type="number" class="manual-input" id="currentAge-input" value="30" min="0" max="100"> Yr</span></label>
+          <input type="range" id="currentAge" min="18" max="60" value="30" aria-label="Current age">
+        </div>
+
+        <div class="field">
+          <label for="retirementAge">Retirement Age <span class="input-wrapper"><input type="number" class="manual-input" id="retirementAge-input" value="60" min="0" max="100"> Yr</span></label>
+          <input type="range" id="retirementAge" min="40" max="75" value="60" aria-label="Retirement age">
+        </div>
+
+        <div class="field">
+          <label for="monthlyExpense">Monthly Expenses <span class="input-wrapper">₹ <input type="number" class="manual-input" id="monthlyExpense-input" value="50000" min="0"></span></label>
+          <input type="range" id="monthlyExpense" min="5000" max="500000" value="50000" step="1000" aria-label="Monthly expenses in rupees">
+        </div>
+
+        <div class="field">
+          <label for="expectedReturn">Expected Return (% p.a.) <span class="input-wrapper"><input type="number" class="manual-input" id="expectedReturn-input" value="12" min="0" step="0.5"> %</span></label>
+          <input type="range" id="expectedReturn" min="1" max="20" value="12" step="0.5" aria-label="Expected annual return percentage">
+        </div>
+
+        <div class="field">
+          <label for="inflationRate">Inflation Rate (% p.a.) <span class="input-wrapper"><input type="number" class="manual-input" id="inflationRate-input" value="6" min="0" step="0.5"> %</span></label>
+          <input type="range" id="inflationRate" min="1" max="12" value="6" step="0.5" aria-label="Expected annual inflation rate">
+        </div>
+      </section>
+
+      <!-- Results Panel -->
+      <section class="calc-panel" aria-label="Retirement calculation results">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Your Retirement Plan
+        </h2>
+
+        <div class="result-card" style="margin-bottom: 2rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02);">
+          <div class="result-label" style="color: var(--color-text);">Required Retirement Corpus</div>
+          <div class="result-value highlight" id="resultCorpus" style="font-size: 2.25rem;">--</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">Monthly SIP Needed</div>
+            <div class="result-value" style="font-size:1.3rem;" id="resultSIP">--</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">Future Monthly Expense</div>
+            <div class="result-value" style="font-size:1.3rem;" id="resultExpense">--</div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:2rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">Total Investment</div>
+            <div class="result-value" style="font-size:1.1rem; color:var(--color-text-muted);" id="resultInvestment">--</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">Returns Generated</div>
+            <div class="result-value" style="font-size:1.1rem; color:var(--color-text-muted);" id="resultReturns">--</div>
+          </div>
+        </div>
+        
+        <div id="resultYears" style="display:none;"></div>
+
+        <div class="chart-container" aria-label="Investment vs returns doughnut chart">
+          <canvas id="retirementChart"></canvas>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content" aria-label="About retirement planning">
+      <h2>Retirement Calculator India: Plan a Worry-Free Future</h2>
+      <p>Retirement planning is one of the most important financial decisions you will make. With rising life expectancy and increasing healthcare costs, building a sufficient retirement corpus has never been more critical. Our retirement calculator helps you estimate exactly how much you need to save and invest to maintain your current lifestyle after you stop working.</p>
+
+      <h3>How Does the Retirement Corpus Calculator Work?</h3>
+      <p>This calculator uses three key inputs to determine your retirement needs: your current monthly expenses, expected inflation rate, and the number of years until retirement. It first projects your monthly expenses at the time of retirement by adjusting for inflation using the compound growth formula. Then, assuming a 25-year retirement period, it calculates the total corpus required to sustain those inflation-adjusted expenses throughout your retirement years.</p>
+
+      <h3>Why Inflation Matters in Retirement Planning</h3>
+      <p>Many people underestimate the impact of inflation on their retirement needs. At an average inflation rate of 6%, prices double approximately every 12 years. This means if you currently spend Rs 50,000 per month, you could need over Rs 2 lakh per month by the time you retire in 25 years. Ignoring inflation is the single biggest mistake in retirement planning, and our calculator ensures you account for it accurately.</p>
+
+      <h3>Start Your SIP Early for Maximum Benefit</h3>
+      <p>The power of compounding works best over long periods. Starting a systematic investment plan (SIP) in your twenties can dramatically reduce the monthly amount you need to invest compared to starting in your thirties or forties. Even a small SIP started early can grow into a substantial retirement corpus over two to three decades. Use the sliders above to see how your required SIP changes based on your current age and target retirement age.</p>
+
+      <ul>
+        <li>Account for inflation when estimating future expenses</li>
+        <li>Plan for at least 25 years of retirement</li>
+        <li>Review and increase your SIP annually</li>
+        <li>Diversify across equity, debt, and gold for balanced returns</li>
+        <li>Consider a retirement-focused mutual fund for disciplined investing</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+    <nav aria-label="Footer navigation" style="margin-top:0.5rem;"><a href="/">Home</a><a href="/resources">Resources</a></nav>
+  </footer>
+
+  <script>
+    (function () {
+      const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+      const fmtCurrency = (v) => '\u20B9 ' + fmt.format(v);
+
+      // DOM refs
+      const inputs = {
+        currentAge: document.getElementById('currentAge'),
+        retirementAge: document.getElementById('retirementAge'),
+        monthlyExpense: document.getElementById('monthlyExpense'),
+        expectedReturn: document.getElementById('expectedReturn'),
+        inflationRate: document.getElementById('inflationRate'),
+      };
+      const vals = {
+        currentAge: document.getElementById('currentAgeVal'),
+        retirementAge: document.getElementById('retirementAgeVal'),
+        monthlyExpense: document.getElementById('monthlyExpenseVal'),
+        expectedReturn: document.getElementById('expectedReturnVal'),
+        inflationRate: document.getElementById('inflationRateVal'),
+      };
+      const results = {
+        corpus: document.getElementById('resultCorpus'),
+        sip: document.getElementById('resultSIP'),
+        expense: document.getElementById('resultExpense'),
+        years: document.getElementById('resultYears'),
+        investment: document.getElementById('resultInvestment'),
+        returns: document.getElementById('resultReturns'),
+      };
+
+      let chart = null;
+
+      function calculate() {
+        const currentAge = parseInt(inputs.currentAge.value) || 0;
+        const retirementAge = parseInt(inputs.retirementAge.value) || 0;
+        const monthlyExpense = parseInt(inputs.monthlyExpense.value) || 0;
+        const expectedReturn = parseFloat(inputs.expectedReturn.value) / 100 || 0;
+        const inflationRate = parseFloat(inputs.inflationRate.value) / 100 || 0;
+
+        const yearsToRetire = Math.max(retirementAge - currentAge, 1);
+        const retirementDuration = 25; // years in retirement
+
+        // Inflation-adjusted monthly expense at retirement
+        const inflatedExpense = monthlyExpense * Math.pow(1 + inflationRate, yearsToRetire);
+
+        // Total corpus needed (present value of annuity for retirementDuration years)
+        // Real rate of return during retirement
+        const realReturnMonthly = (expectedReturn - inflationRate) / 12;
+        const nMonths = retirementDuration * 12;
+        let corpus;
+        if (realReturnMonthly <= 0) {
+          corpus = inflatedExpense * nMonths;
+        } else {
+          corpus = inflatedExpense * ((1 - Math.pow(1 + realReturnMonthly, -nMonths)) / realReturnMonthly);
+        }
+
+        // Monthly SIP needed to accumulate corpus
+        const monthlyReturn = expectedReturn / 12;
+        const totalMonths = yearsToRetire * 12;
+        let sip;
+        if (monthlyReturn <= 0) {
+          sip = corpus / totalMonths;
+        } else {
+          sip = corpus * monthlyReturn / (Math.pow(1 + monthlyReturn, totalMonths) - 1);
+        }
+
+        const totalInvestment = sip * totalMonths;
+        const totalReturns = Math.max(corpus - totalInvestment, 0);
+
+        // Update results
+        results.corpus.textContent = fmtCurrency(corpus);
+        results.sip.textContent = fmtCurrency(sip);
+        results.expense.textContent = fmtCurrency(inflatedExpense) + '/month';
+        results.years.textContent = yearsToRetire + ' years';
+        results.investment.textContent = fmtCurrency(totalInvestment);
+        results.returns.textContent = fmtCurrency(totalReturns);
+
+        updateChart(totalInvestment, totalReturns);
+      }
+
+      function updateChart(investment, returns) {
+        const ctx = document.getElementById('retirementChart').getContext('2d');
+        if (chart) chart.destroy();
+        chart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Your Investment', 'Returns Generated'],
+            datasets: [{
+              data: [investment, returns],
+              backgroundColor: ['#0044CC', '#FFB300'],
+              borderWidth: 0,
+              hoverOffset: 6,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            cutout: '65%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  font: { family: "'Inter', sans-serif", size: 12, weight: '500' },
+                  color: '#5a6068',
+                  padding: 16,
+                  usePointStyle: true,
+                  pointStyleWidth: 10,
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (ctx) {
+                    return ctx.label + ': ' + fmtCurrency(ctx.parsed);
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Bind events
+      function sync(idBase, val) {
+        if(val < 0) val = 0; // Prevent negative
+        const slider = document.getElementById(idBase);
+        const input = document.getElementById(idBase + '-input');
+        if (slider && input) {
+          slider.value = val;
+          input.value = val;
+        }
+        calculate();
+      }
+
+      Object.values(inputs).forEach(input => {
+        input.addEventListener('input', (e) => sync(e.target.id, e.target.value));
+      });
+      document.querySelectorAll('.manual-input').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const idBase = e.target.id.replace('-input', '');
+          sync(idBase, e.target.value);
+        });
+      });
+
+      // Initial calculation
+      calculate();
+    })();
+  </script>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

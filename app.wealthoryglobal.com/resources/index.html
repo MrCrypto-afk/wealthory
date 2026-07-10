@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investment Resources & Financial Planning Guides | Wealthory</title>
+  <meta name="description" content="Comprehensive financial planning resources covering SIP investments, EMI calculations, retirement planning, income tax estimation, CAGR analysis, and mutual fund vs fixed deposit comparisons. Free guides for Indian investors." />
+  <meta name="keywords" content="SIP calculator, EMI calculator, retirement planner, income tax calculator, CAGR calculator, lumpsum calculator, mutual fund calculator, financial planning India, investment guide" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://app.wealthoryglobal.com/resources" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://app.wealthoryglobal.com/resources" />
+  <meta property="og:title" content="Investment Resources & Financial Planning Guides | Wealthory" />
+  <meta property="og:description" content="Free, in-depth guides on SIP investing, EMI planning, retirement corpus estimation, and tax-saving strategies for Indian investors." />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Wealthory Financial Planning Resources",
+    "description": "Comprehensive investment resources and financial planning guides for Indian investors.",
+    "url": "https://app.wealthoryglobal.com/resources",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Wealthory Global"
+    },
+    "hasPart": [
+      {"@type": "Article", "name": "Understanding Systematic Investment Plans (SIP)", "url": "https://app.wealthoryglobal.com/resources#sip-investing"},
+      {"@type": "Article", "name": "EMI and Loan Planning Guide", "url": "https://app.wealthoryglobal.com/resources#emi-planning"},
+      {"@type": "Article", "name": "Retirement Planning in India", "url": "https://app.wealthoryglobal.com/resources#retirement-planning"},
+      {"@type": "Article", "name": "Income Tax Planning Guide", "url": "https://app.wealthoryglobal.com/resources#tax-planning"},
+      {"@type": "Article", "name": "Fixed Deposits vs Mutual Funds", "url": "https://app.wealthoryglobal.com/resources#fd-vs-mf"},
+      {"@type": "Article", "name": "Goal-Based Financial Planning", "url": "https://app.wealthoryglobal.com/resources#goal-planning"},
+      {"@type": "Article", "name": "Understanding CAGR and Lumpsum Investments", "url": "https://app.wealthoryglobal.com/resources#cagr-lumpsum"}
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .resource-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 4rem;
+    }
+    .resource-nav a {
+      padding: 0.75rem 1.25rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+      background: var(--color-bg-alt);
+      transition: all var(--transition);
+    }
+    .resource-nav a:hover {
+      border-color: var(--color-primary);
+      color: var(--color-text);
+      background: var(--color-bg);
+      box-shadow: var(--shadow-sm);
+    }
+    .resource-section {
+      margin-bottom: 5rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .resource-section:last-of-type {
+      border-bottom: none;
+    }
+  </style>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home">
+        <img src="/assets/logo.png" alt="Wealthory Logo" />
+      </a>
+      <div class="nav-links">
+        <a href="https://admin.wealthoryglobal.com" class="nav-utility">Advisor Login</a>
+        <a href="/resources">Insights</a>
+        <a href="/" class="nav-cta">All Tools</a>
+      
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container" style="max-width: 900px;">
+    
+    <div class="page-header">
+      <h1>Investment Resources &amp; Planning Guides</h1>
+      <p>Everything you need to make informed investment decisions — from understanding systematic investment plans to optimising your income tax liability.</p>
+    </div>
+
+    <!-- Quick-jump navigation -->
+    <nav class="resource-nav" aria-label="Resource topics">
+      <a href="#sip-investing">SIP Investing</a>
+      <a href="#emi-planning">EMI &amp; Loans</a>
+      <a href="#retirement-planning">Retirement</a>
+      <a href="#tax-planning">Income Tax</a>
+      <a href="#fd-vs-mf">FD vs Mutual Funds</a>
+      <a href="#goal-planning">Goal Planning</a>
+      <a href="#cagr-lumpsum">CAGR &amp; Lumpsum</a>
+    </nav>
+
+    <div class="seo-content" style="border-top:none; margin-top:0; padding-top:0;">
+      
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 1: SIP INVESTING                    -->
+      <!-- ═══════════════════════════════════════════ -->
+      <article class="resource-section" id="sip-investing">
+        <h2>Understanding Systematic Investment Plans (SIP)</h2>
+        <p>A <strong>Systematic Investment Plan</strong>, commonly known as <strong>SIP</strong>, is a disciplined method of investing a fixed amount in mutual funds at regular intervals — typically monthly. SIP investments harness the <strong>power of compounding</strong> and <strong>rupee-cost averaging</strong> to help investors build significant wealth over the long term, regardless of short-term market fluctuations.</p>
+        
+        <h3>How Does a SIP Calculator Work?</h3>
+        <p>A <strong>SIP calculator</strong> estimates the future value of your periodic investments based on three inputs: your <strong>monthly investment amount</strong>, the <strong>expected annual rate of return</strong>, and your <strong>investment tenure</strong>. The underlying formula uses compound interest mathematics to project how your corpus grows over time.</p>
+        
+        <h3>Why SIP Is Ideal for Indian Investors</h3>
+        <ul>
+          <li><strong>Rupee-cost averaging:</strong> You automatically buy more mutual fund units when markets dip and fewer when markets peak.</li>
+          <li><strong>Compounding returns:</strong> Returns earned on your SIP investments generate their own returns, creating an exponential growth curve.</li>
+          <li><strong>Financial discipline:</strong> Automated monthly deductions build a consistent saving habit without requiring active market timing.</li>
+        </ul>
+        
+        <div style="margin-top: 2rem;">
+          <a href="/sip" class="nav-cta" aria-label="Open SIP Calculator">Try the SIP Calculator</a>
+        </div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 2: EMI & LOAN PLANNING              -->
+      <!-- ═══════════════════════════════════════════ -->
+      <article class="resource-section" id="emi-planning">
+        <h2>EMI and Loan Planning Guide</h2>
+        <p>An <strong>Equated Monthly Instalment (EMI)</strong> is the fixed payment amount a borrower makes to a lender on a specified date each month. EMIs are used to repay both the principal and interest on a loan over a defined tenure. Whether you are considering a <strong>home loan</strong> or <strong>personal loan</strong>, understanding your EMI obligations is critical.</p>
+        
+        <h3>Key Factors Affecting Your EMI</h3>
+        <ul>
+          <li><strong>Loan amount:</strong> A higher principal directly increases your monthly instalment.</li>
+          <li><strong>Interest rate:</strong> Even a 0.5% difference in the home loan interest rate can translate to lakhs of rupees over a 20-year mortgage.</li>
+          <li><strong>Tenure:</strong> Longer tenures reduce monthly EMI but significantly increase total interest paid.</li>
+        </ul>
+        
+        <div style="margin-top: 2rem;">
+          <a href="/emi" class="nav-cta" aria-label="Open EMI Calculator">Try the EMI Calculator</a>
+        </div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 3: RETIREMENT PLANNING              -->
+      <!-- ═══════════════════════════════════════════ -->
+      <article class="resource-section" id="retirement-planning">
+        <h2>Retirement Planning in India</h2>
+        <p><strong>Retirement planning</strong> is the process of estimating how much money you will need after you stop earning a regular income, and then building a strategy to accumulate that <strong>retirement corpus</strong>. In India, self-directed retirement planning is essential.</p>
+        
+        <h3>The Inflation Factor</h3>
+        <p>Inflation is the silent wealth destroyer. At an average inflation rate of 6% in India, expenses that cost ₹50,000 per month today will cost approximately ₹1,60,000 per month in 20 years. A robust <strong>retirement planning calculator</strong> factors this in, ensuring your corpus accounts for the diminishing purchasing power of the rupee.</p>
+        
+        <div style="margin-top: 2rem;">
+          <a href="/retirement" class="nav-cta" aria-label="Open Retirement Planner">Try the Retirement Planner</a>
+        </div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 4: INCOME TAX PLANNING              -->
+      <!-- ═══════════════════════════════════════════ -->
+      <article class="resource-section" id="tax-planning">
+        <h2>Income Tax Estimation & Strategies</h2>
+        <p>Understanding your <strong>income tax liability</strong> is fundamental to effective financial planning. India operates two parallel tax regimes — the <strong>Old Tax Regime</strong> with deductions and exemptions, and the <strong>New Tax Regime</strong> with lower slab rates but fewer deductions.</p>
+        
+        <h3>Old vs New Tax Regime</h3>
+        <p>The <strong>old tax regime</strong> allows deductions under Sections 80C, 80D, HRA exemption, and standard deduction. The <strong>new tax regime</strong> offers reduced slab rates but removes most deductions. An <strong>income tax calculator</strong> helps you determine which regime is more beneficial for your specific income profile.</p>
+        
+        <div style="margin-top: 2rem;">
+          <a href="/tax" class="nav-cta" aria-label="Open Tax Estimator">Try the Tax Estimator</a>
+        </div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 5: FD VS MUTUAL FUNDS               -->
+      <!-- ═══════════════════════════════════════════ -->
+      <article class="resource-section" id="fd-vs-mf">
+        <h2>Fixed Deposits vs Mutual Funds</h2>
+        <p>The debate between <strong>fixed deposits (FD)</strong> and <strong>mutual funds</strong> is one of the most common questions among Indian investors. While FDs offer guaranteed returns, mutual funds have historically delivered significantly higher inflation-adjusted returns over long investment horizons.</p>
+        
+        <h3>The Inflation Problem</h3>
+        <p>A typical bank fixed deposit in India offers 6–7% annual interest. After accounting for the tax on FD interest and inflation, the real return on an FD is often close to zero.</p>
+        
+        <div style="margin-top: 2rem;">
+          <a href="/fd-vs-mf" class="nav-cta" aria-label="Open FD vs Mutual Fund Comparison">Try FD vs MF Comparison</a>
+        </div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 6: GOAL-BASED PLANNING              -->
+      <!-- ═══════════════════════════════════════════ -->
+      <article class="resource-section" id="goal-planning">
+        <h2>Goal-Based Financial Planning</h2>
+        <p><strong>Goal-based investing</strong> is a strategy where every rupee you invest is assigned to a specific financial milestone. A <strong>financial goal planner</strong> reverse-engineers the monthly or lumpsum investment required to reach your target amount within a specified timeframe, adjusted for inflation.</p>
+        
+        <div style="margin-top: 2rem;">
+          <a href="/goal-planner" class="nav-cta" aria-label="Open Goal Planner">Try the Goal Planner</a>
+        </div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 7: CAGR & LUMPSUM                   -->
+      <!-- ═══════════════════════════════════════════ -->
+      <article class="resource-section" id="cagr-lumpsum">
+        <h2>Understanding CAGR and Lumpsum Investments</h2>
+        <p>The <strong>Compound Annual Growth Rate (CAGR)</strong> measures the mean annual growth rate of an investment over a specified period. It provides a smoothed, annualised figure that accounts for the compounding effect.</p>
+        
+        <h3>Lumpsum Investments</h3>
+        <p>A <strong>lumpsum investment</strong> is a one-time, bulk investment into a mutual fund. While SIPs are ideal for regular income earners, lumpsum investing can be highly rewarding when you have a windfall and equity valuations are reasonable.</p>
+        
+        <div style="margin-top: 2rem; display:flex; gap:1rem;">
+          <a href="/cagr" class="nav-cta" aria-label="Open CAGR Calculator">CAGR Calculator</a>
+          <a href="/lumpsum" class="nav-cta" aria-label="Open Lumpsum Calculator">Lumpsum Calculator</a>
+        </div>
+      </article>
+      
+    </div>
+  </main>
+
+  <footer class="compliance-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p><strong>Risk Warning:</strong> Mutual fund investments are subject to market risks, read all scheme related documents carefully. The calculators provided on this platform are for illustrative purposes only and do not constitute financial advice. Past performance is not indicative of future returns.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+          <a href="/grievance">Grievance Redressal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

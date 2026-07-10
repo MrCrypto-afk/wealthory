@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Goal Planner | Wealthory Global</title>
+  <meta name="description" content="Calculate the exact SIP or lumpsum investment required to achieve your future financial milestones, fully adjusted for inflation." />
+  <link rel="canonical" href="https://app.wealthoryglobal.com/goal-planner" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Why do I need to adjust my financial goals for inflation?", "acceptedAnswer": { "@type": "Answer", "text": "Inflation reduces the purchasing power of money over time. A goal that costs ₹10 Lakhs today might cost ₹20 Lakhs in 10 years. Adjusting for inflation ensures you do not fall short of capital when the milestone arrives." } },
+      { "@type": "Question", "name": "Should I invest via SIP or Lumpsum for my goals?", "acceptedAnswer": { "@type": "Answer", "text": "SIPs are excellent for goals tied to regular monthly income, as they enforce discipline and average out market volatility. Lumpsum investments are suitable if you have a large corpus today and want to deploy it immediately." } }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home">
+        <img src="/assets/logo.png" alt="Wealthory Logo" />
+      </a>
+      <div class="nav-links">
+        <a href="https://admin.wealthoryglobal.com" class="nav-utility">Advisor Login</a>
+        <a href="/resources">Insights</a>
+        <a href="/" class="nav-cta">All Tools</a>
+      
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>Financial Goal Architecture</h1>
+      <p>Reverse-engineer the exact capital required to achieve inflation-adjusted milestones.</p>
+    </div>
+
+    <div class="calc-layout">
+      <!-- Input Panel -->
+      <div class="calc-panel">
+        <div class="field">
+          <label for="target-amt"><span>Target Amount (Today's Cost)</span> <span class="input-wrapper">₹ <input type="number" class="manual-input" id="target-amt-input" value="5000000" min="0"></span></label>
+          <input type="range" id="target-amt" min="50000" max="100000000" step="50000" value="5000000" aria-label="Target Goal Amount" />
+        </div>
+        <div class="field">
+          <label for="horizon"><span>Time Horizon</span> <span class="input-wrapper"><input type="number" class="manual-input" id="horizon-input" value="10" min="0"> Yr</span></label>
+          <input type="range" id="horizon" min="1" max="30" step="1" value="10" aria-label="Time Horizon in Years" />
+        </div>
+        <div class="field">
+          <label for="exp-return"><span>Expected Return (p.a)</span> <span class="input-wrapper"><input type="number" class="manual-input" id="exp-return-input" value="12" min="0" step="0.5"> %</span></label>
+          <input type="range" id="exp-return" min="1" max="25" step="0.5" value="12" aria-label="Expected Return Rate" />
+        </div>
+        <div class="field">
+          <label for="inflation"><span>Expected Inflation (p.a)</span> <span class="input-wrapper"><input type="number" class="manual-input" id="inflation-input" value="6" min="0" step="0.5"> %</span></label>
+          <input type="range" id="inflation" min="0" max="12" step="0.5" value="6" aria-label="Expected Inflation Rate" />
+        </div>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="calc-panel">
+        <div class="result-card" style="margin-bottom: 2rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02); border-color: var(--color-accent); background: rgba(0, 68, 204, 0.05);">
+          <div class="result-label" style="color: var(--color-accent);">Required Monthly SIP</div>
+          <div class="result-value highlight" id="res-req-sip" style="font-size: 2.25rem;">₹0</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:2rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">Inflation-Adjusted Target</div>
+            <div class="result-value" style="font-size:1.3rem;" id="res-adj-goal">₹0</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">OR Lumpsum Today</div>
+            <div class="result-value" style="font-size:1.3rem;" id="res-req-lumpsum">₹0</div>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <canvas id="calcChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic SEO Hub -->
+    <section class="seo-content" aria-labelledby="seo-title">
+      <h2 id="seo-title">The Blueprint for Financial Milestones</h2>
+      <p>Goal-based investing shifts focus from generic returns to specific outcomes. Whether funding higher education, purchasing real estate, or building a bespoke corpus, this architecture calculates exactly how much capital you must allocate today to meet tomorrow's liabilities.</p>
+      
+      <h3>The Impact of Inflation</h3>
+      <p>The silent destroyer of wealth is inflation. When planning a milestone that is a decade away, pricing it at today's value leads to severe capital shortfalls. Our engine applies an inflation premium to your goal before running the required accumulation algorithms.</p>
+      
+      <h3>The Goal Architecture Formula</h3>
+      <div class="formula-box">
+        <strong>Adjusted Target = PV × (1 + Inflation)<sup>n</sup></strong><br><br>
+        <span style="font-size:0.9rem; color:var(--color-text-muted);">
+        Where:<br>
+        <strong>PV</strong> = Present Value of Goal (Today's Cost)<br>
+        <strong>Inflation</strong> = Expected Annual Inflation Rate<br>
+        <strong>n</strong> = Time Horizon in Years
+        </span>
+      </div>
+
+      <h3>Frequently Asked Questions</h3>
+      <details>
+        <summary>Why do I need to adjust for inflation?</summary>
+        <p>Purchasing power decreases over time. If a child's higher education costs ₹20 Lakhs today, at 6% inflation, it will cost nearly ₹36 Lakhs in 10 years. Failing to adjust for this results in a missed milestone.</p>
+      </details>
+      <details>
+        <summary>Should I use the SIP or Lumpsum route?</summary>
+        <p>If you have surplus liquid capital today, deploying a lumpsum locks in the compounding immediately. However, for salaried professionals, matching monthly income against a monthly SIP is often the most practical structure.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="compliance-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p><strong>Risk Warning:</strong> Mutual fund investments are subject to market risks, read all scheme related documents carefully. The calculators provided on this platform are for illustrative purposes only and do not constitute financial advice. Past performance is not indicative of future returns.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+          <a href="/grievance">Grievance Redressal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const fmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    let chart;
+
+    function initChart() {
+      const ctx = document.getElementById('calcChart').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: ['SIP Investment', 'Wealth Generated'], datasets: [{ data: [50, 50], backgroundColor: ['#0044cc', '#ffb300'], borderWidth: 0 }] },
+        options: { cutout: '75%', plugins: { legend: { display: false } } }
+      });
+    }
+
+    function calculate() {
+      let costToday = parseFloat(document.getElementById('target-amt-input').value) || 0;
+      let years = parseInt(document.getElementById('horizon-input').value) || 0;
+      let expReturn = parseFloat(document.getElementById('exp-return-input').value) || 0;
+      let inflation = parseFloat(document.getElementById('inflation-input').value) || 0;
+      expReturn = expReturn / 100;
+      inflation = inflation / 100;
+      
+      let adjTarget = costToday * Math.pow(1 + inflation, years);
+      
+      let n = years * 12;
+      let r = expReturn / 12;
+      
+      let reqSip = 0;
+      if (r > 0) {
+        reqSip = (adjTarget * r) / ((Math.pow(1 + r, n) - 1) * (1 + r));
+      } else {
+        reqSip = adjTarget / n;
+      }
+      
+      let reqLumpsum = adjTarget / Math.pow(1 + expReturn, years);
+      let totalSipInvested = reqSip * n;
+      let wealthGenerated = adjTarget - totalSipInvested;
+
+      document.getElementById('res-adj-goal').textContent = fmt.format(adjTarget);
+      document.getElementById('res-req-sip').textContent = fmt.format(reqSip);
+      document.getElementById('res-req-lumpsum').textContent = fmt.format(reqLumpsum);
+
+      chart.data.datasets[0].data = [totalSipInvested, wealthGenerated];
+      chart.update();
+    }
+
+    function sync(idBase, val) {
+      if(val < 0) val = 0; // Prevent negative
+      const slider = document.getElementById(idBase);
+      const input = document.getElementById(idBase + '-input');
+      if (slider && input) {
+        slider.value = val;
+        input.value = val;
+      }
+      calculate();
+    }
+
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      slider.addEventListener('input', (e) => sync(e.target.id, e.target.value));
+    });
+    document.querySelectorAll('.manual-input').forEach(input => {
+      input.addEventListener('input', (e) => {
+        const idBase = e.target.id.replace('-input', '');
+        sync(idBase, e.target.value);
+      });
+    });
+
+    window.onload = () => { initChart(); calculate(); };
+  </script>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

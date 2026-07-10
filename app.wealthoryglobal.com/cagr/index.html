@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAGR Calculator – Calculate Compound Annual Growth Rate | Wealthory</title>
+  <meta name="description" content="Free CAGR calculator to compute compound annual growth rate of your investments. Enter initial value, final value, and duration to find your CAGR instantly.">
+  <meta name="keywords" content="CAGR calculator, compound annual growth rate calculator, CAGR formula, annualised return calculator, investment growth rate">
+  <link rel="canonical" href="https://app.wealthoryglobal.com/cagr/">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is CAGR?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CAGR stands for Compound Annual Growth Rate. It measures the mean annual growth rate of an investment over a specified period longer than one year. CAGR smooths out the volatility of year-to-year returns and provides a single annualised rate that represents how an investment grew from its initial value to its final value."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is CAGR calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CAGR is calculated using the formula: CAGR = (Final Value / Initial Value)^(1/n) - 1, where n is the number of years. The result is then multiplied by 100 to express it as a percentage."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good CAGR for investments?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A good CAGR depends on the asset class and risk profile. For equity investments in India, a CAGR of 12-15% over 10+ years is considered strong. Fixed deposits typically offer 6-7% CAGR, while gold has historically delivered 8-10% CAGR. Any CAGR that consistently beats inflation (typically 5-6% in India) is considered favourable."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is CAGR the same as average annual return?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. CAGR accounts for the compounding effect and provides a smoothed annualised rate, while the simple average annual return merely averages each year's return without considering compounding. CAGR is generally considered a more accurate measure of investment performance over time."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home"><img src="/assets/logo.png" alt="Wealthory Logo" /></a>
+      <div class="nav-links"><a href="/resources">Resources</a><a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>CAGR Calculator</h1>
+      <p>Find the compound annual growth rate of your investment over any time period.</p>
+    </div>
+
+    <section class="calc-layout" aria-label="CAGR calculator">
+
+      <!-- Input Panel -->
+      <div class="calc-panel">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Investment Details
+        </h2>
+
+        <div class="field">
+          <label for="initialInvestment">
+            Initial Investment
+            <span class="input-wrapper">₹ <input type="number" class="manual-input" id="initialInvestment-input" value="100000" min="0"></span>
+          </label>
+          <input type="range" id="initialInvestment" min="1000" max="100000000" step="1000" value="100000" aria-label="Initial investment amount in rupees" aria-valuemin="1000" aria-valuemax="100000000" aria-valuenow="100000">
+        </div>
+
+        <div class="field">
+          <label for="finalValue">
+            Final Value
+            <span class="input-wrapper">₹ <input type="number" class="manual-input" id="finalValue-input" value="500000" min="0"></span>
+          </label>
+          <input type="range" id="finalValue" min="1000" max="1000000000" step="1000" value="500000" aria-label="Final investment value in rupees" aria-valuemin="1000" aria-valuemax="1000000000" aria-valuenow="500000">
+        </div>
+
+        <div class="field">
+          <label for="investmentPeriod">
+            Investment Period
+            <span class="input-wrapper"><input type="number" class="manual-input" id="investmentPeriod-input" value="5" min="0"> Yr</span>
+          </label>
+          <input type="range" id="investmentPeriod" min="1" max="40" step="1" value="5" aria-label="Investment period in years" aria-valuemin="1" aria-valuemax="40" aria-valuenow="5">
+        </div>
+      </div>
+
+      <!-- Results Panel -->
+      <div class="calc-panel">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0044CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:0.5rem"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Growth Analysis
+        </h2>
+
+        <div class="result-card" style="margin-bottom: 2rem; box-shadow: var(--card-hover-shadow); transform: scale(1.02);">
+          <div class="result-label" style="color: var(--color-text);">CAGR</div>
+          <div class="result-value highlight" id="cagrPercent" style="font-size: 2.25rem;">--</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:2rem; padding:0 0.5rem;">
+          <div>
+            <div class="result-label">Total Gain</div>
+            <div class="result-value" style="font-size:1.3rem;" id="totalGain">--</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="result-label">Absolute Return</div>
+            <div class="result-value" style="font-size:1.3rem;" id="absoluteReturn">--</div>
+          </div>
+        </div>
+
+        <div class="chart-container" style="max-width:360px" role="img" aria-label="Bar chart showing growth from initial investment to final value">
+          <canvas id="cagrChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content" aria-label="About CAGR calculator">
+      <h2>What Is a CAGR Calculator?</h2>
+      <p>A CAGR calculator is a financial planning tool that computes the Compound Annual Growth Rate of an investment. CAGR represents the rate at which an investment would have grown if it had compounded at a steady rate every year from its initial value to its final value. The formula used is: <strong>CAGR = (FV / PV)^(1/n) - 1</strong>, where FV is the final value, PV is the initial value (present value), and n is the number of years. This metric is widely used by analysts, fund managers, and individual investors to evaluate and compare investment performance across different time horizons.</p>
+
+      <h3>Why Is CAGR Important?</h3>
+      <p>CAGR is essential because it eliminates the noise of year-to-year fluctuations and provides a single, smoothed growth rate. This makes it far more meaningful than simple average returns, which can be misleading. For example, if a fund gains 50% in year one and loses 30% in year two, the simple average return is 10%, but the actual compounded growth (CAGR) is only about 2.5%. CAGR gives you the true picture of how your money actually grew over the entire period.</p>
+
+      <h3>How to Use CAGR for Investment Decisions</h3>
+      <ul>
+        <li><strong>Compare Funds:</strong> Use CAGR to compare two mutual funds over the same period, ensuring an apples-to-apples comparison regardless of volatility differences.</li>
+        <li><strong>Set Realistic Goals:</strong> If large-cap equity funds historically deliver 12% CAGR, you can project how much you need to invest today to reach your target corpus.</li>
+        <li><strong>Track Portfolio Performance:</strong> Calculate the CAGR of your overall portfolio to see if your asset allocation strategy is meeting your expected growth rate.</li>
+        <li><strong>Benchmark Against Inflation:</strong> A positive real return (CAGR minus inflation) ensures your purchasing power is genuinely increasing over time.</li>
+      </ul>
+
+      <h3>Limitations of CAGR</h3>
+      <p>While CAGR is a powerful metric, it has limitations. It assumes a smooth growth trajectory and does not reflect interim volatility or drawdowns. An investment with a high CAGR may have experienced significant drops during the period, which CAGR alone won't reveal. Additionally, CAGR is a backward-looking measure — past growth rates do not guarantee future performance. It's best used alongside other metrics like standard deviation, Sharpe ratio, and maximum drawdown for a comprehensive investment analysis.</p>
+
+      <h3>Frequently Asked Questions</h3>
+      <h3>Can CAGR be negative?</h3>
+      <p>Yes. CAGR will be negative when the final value of an investment is lower than the initial value, indicating that the investment lost value over the measured period. For example, if you invested Rs 10,00,000 and the value dropped to Rs 7,00,000 over 3 years, the CAGR would be approximately -11.2%.</p>
+
+      <h3>What is the difference between CAGR and IRR?</h3>
+      <p>CAGR measures the growth of a single lumpsum investment from start to finish, while Internal Rate of Return (IRR) accounts for multiple cash flows at different points in time. If your investment involves periodic additions or withdrawals, IRR is the more appropriate metric. CAGR is best suited for evaluating a one-time investment held over a specific period.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+    <nav aria-label="Footer navigation" style="margin-top:0.5rem;"><a href="/">Home</a><a href="/resources">Resources</a></nav>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script>
+    (function () {
+      const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+      const fmtCurrency = (v) => '\u20B9 ' + fmt.format(Math.round(v));
+      const fmtPct = (v) => v.toFixed(2) + '%';
+
+      const initialInput = document.getElementById('initialInvestment');
+      const finalInput = document.getElementById('finalValue');
+      const periodInput = document.getElementById('investmentPeriod');
+
+      const initialDisplay = document.getElementById('initialInvestmentDisplay');
+      const finalDisplay = document.getElementById('finalValueDisplay');
+      const periodDisplay = document.getElementById('investmentPeriodDisplay');
+
+      const cagrPercentEl = document.getElementById('cagrPercent');
+      const absoluteReturnEl = document.getElementById('absoluteReturn');
+      const totalGainEl = document.getElementById('totalGain');
+
+      // Chart setup
+      const ctx = document.getElementById('cagrChart').getContext('2d');
+      let chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Initial Investment', 'Final Value'],
+          datasets: [{
+            data: [0, 0],
+            backgroundColor: ['#0044CC', '#FFB300'],
+            borderRadius: 6,
+            borderSkipped: false,
+            barPercentage: 0.5
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return fmtCurrency(context.parsed.y);
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                font: { family: "'Inter', sans-serif", size: 11, weight: '500' },
+                color: '#5a6068'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: '#e2e5e9' },
+              ticks: {
+                font: { family: "'Inter', sans-serif", size: 11 },
+                color: '#5a6068',
+                callback: function (value) {
+                  if (value >= 10000000) return (value / 10000000).toFixed(1) + ' Cr';
+                  if (value >= 100000) return (value / 100000).toFixed(1) + ' L';
+                  if (value >= 1000) return (value / 1000).toFixed(0) + ' K';
+                  return value;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      function calculate() {
+        const PV = parseFloat(initialInput.value) || 0;
+        const FV = parseFloat(finalInput.value) || 0;
+        const n = parseInt(periodInput.value) || 0;
+
+        // Update ARIA
+        initialInput.setAttribute('aria-valuenow', PV);
+        finalInput.setAttribute('aria-valuenow', FV);
+        periodInput.setAttribute('aria-valuenow', n);
+
+        // CAGR = (FV / PV)^(1/n) - 1
+        const cagr = (Math.pow(FV / PV, 1 / n) - 1) * 100;
+
+        // Absolute Return = ((FV - PV) / PV) * 100
+        const absoluteRet = ((FV - PV) / PV) * 100;
+
+        // Total Gain
+        const gain = FV - PV;
+
+        cagrPercentEl.textContent = fmtPct(cagr);
+        absoluteReturnEl.textContent = fmtPct(absoluteRet);
+        totalGainEl.textContent = fmtCurrency(gain);
+
+        // Update chart
+        chart.data.datasets[0].data = [PV, FV];
+        chart.update();
+      }
+
+      function sync(idBase, val) {
+        if(val < 0) val = 0; // Prevent negative
+        const slider = document.getElementById(idBase);
+        const input = document.getElementById(idBase + '-input');
+        if (slider && input) {
+          slider.value = val;
+          input.value = val;
+        }
+        calculate();
+      }
+
+      [initialInput, finalInput, periodInput].forEach(slider => {
+        slider.addEventListener('input', (e) => sync(e.target.id, e.target.value));
+      });
+      document.querySelectorAll('.manual-input').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const idBase = e.target.id.replace('-input', '');
+          sync(idBase, e.target.value);
+        });
+      });
+
+      // Initial calculation
+      calculate();
+    })();
+  </script>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>
