@@ -57,7 +57,7 @@ export function ContactSection() {
             </p>
             <div className="pt-8 space-y-4">
               <p className="text-foreground font-medium">Contact Details</p>
-              <p className="text-text-muted font-light mt-4">Email: inquiries@wealthoryglobal.com</p>
+              <p className="text-text-muted font-light mt-4">Email: info@wealthoryglobal.com</p>
             </div>
           </div>
 
