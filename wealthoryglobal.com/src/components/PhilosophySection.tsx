@@ -16,16 +16,7 @@ export function PhilosophySection() {
           <p className="text-text-muted text-lg font-light leading-relaxed">
             Join thousands of smart investors who receive our weekly breakdowns on macroeconomic shifts, personal finance strategies, and actionable market analysis on Substack.
           </p>
-          <div className="grid grid-cols-2 gap-8 pt-8 border-t border-border mt-8">
-            <div>
-              <div className="text-4xl font-serif text-foreground mb-2">10k+</div>
-              <div className="text-sm text-text-muted uppercase tracking-widest">Active Readers</div>
-            </div>
-            <div>
-              <div className="text-4xl font-serif text-foreground mb-2">Free</div>
-              <div className="text-sm text-text-muted uppercase tracking-widest">Weekly Delivery</div>
-            </div>
-          </div>
+
           <div className="pt-4">
             <a 
               href="https://wealthory.substack.com/" 
