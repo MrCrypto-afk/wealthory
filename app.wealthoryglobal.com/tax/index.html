@@ -293,6 +293,13 @@
         const container = document.getElementById(containerId);
         container.innerHTML = '';
         breakdown.forEach(slab => {
+          if (slab.isRebate) {
+             const row = document.createElement('div');
+             row.className = 'result-row';
+             row.innerHTML = '<span class="label" style="color: #10B981; font-weight: 600;">' + slab.rebateName + '</span><span class="val" style="color: #10B981;">' + (slab.tax === 0 ? '-100%' : fmtCurrency(slab.tax)) + '</span>';
+             container.appendChild(row);
+             return;
+          }
           if (slab.taxable <= 0) return;
           const row = document.createElement('div');
           row.className = 'result-row';
@@ -311,12 +318,36 @@
         const oldStandardDed = 50000;
         const totalDeductions = ded80c + ded80d + hra + oldStandardDed;
         const taxableOld = Math.max(income - totalDeductions, 0);
-        const oldResult = calculateTax(taxableOld, oldRegimeSlabs);
+        let oldResult = calculateTax(taxableOld, oldRegimeSlabs);
+
+        if (taxableOld <= 500000) {
+          oldResult.tax = 0;
+          oldResult.breakdown.push({ isRebate: true, rebateName: 'Sec 87A Rebate', tax: 0 });
+        } else {
+          const incomeAbove5L = taxableOld - 500000;
+          if (oldResult.tax > incomeAbove5L) {
+             const relief = oldResult.tax - incomeAbove5L;
+             oldResult.tax = incomeAbove5L;
+             oldResult.breakdown.push({ isRebate: true, rebateName: 'Marginal Relief', tax: -relief });
+          }
+        }
 
         // New regime: only standard deduction of 75,000
         const newStandardDed = 75000;
         const taxableNew = Math.max(income - newStandardDed, 0);
-        const newResult = calculateTax(taxableNew, newRegimeSlabs);
+        let newResult = calculateTax(taxableNew, newRegimeSlabs);
+
+        if (taxableNew <= 1200000) {
+          newResult.tax = 0;
+          newResult.breakdown.push({ isRebate: true, rebateName: 'Sec 87A Rebate', tax: 0 });
+        } else {
+          const incomeAbove12L = taxableNew - 1200000;
+          if (newResult.tax > incomeAbove12L) {
+             const relief = newResult.tax - incomeAbove12L;
+             newResult.tax = incomeAbove12L;
+             newResult.breakdown.push({ isRebate: true, rebateName: 'Marginal Relief', tax: -relief });
+          }
+        }
 
         // Add 4% cess
         const cessOld = oldResult.tax * 0.04;
