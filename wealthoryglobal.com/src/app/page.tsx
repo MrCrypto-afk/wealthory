@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/Navbar"
 import { PhilosophySection } from "@/components/PhilosophySection"
 import { ServicesSection } from "@/components/ServicesSection"
-import { ContactSection } from "@/components/ContactSection"
+
 import Link from "next/link"
 
 export default function Home() {
@@ -38,12 +38,7 @@ export default function Home() {
             >
               Use Our Calculators
             </a>
-            <Link
-              href="#contact"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-accent-primary text-black font-semibold hover:bg-accent-primary-hover transition-all hover:-translate-y-1 text-lg"
-            >
-              Start a Conversation
-            </Link>
+
             <a
               href="https://wealthory.substack.com/"
               target="_blank"
@@ -82,7 +77,7 @@ export default function Home() {
 
       <PhilosophySection />
       <ServicesSection />
-      <ContactSection />
+
       
       {/* Simple Footer */}
       <footer className="py-12 border-t border-border bg-surface text-center">
