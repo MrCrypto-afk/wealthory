@@ -57,13 +57,10 @@ function requireAuth(callback) {
     }
 }
 
-// Call init when the window loads, assuming the GIS script is included synchronously or defer
-window.onload = () => {
-    // Check if the script is loaded, if not wait a bit
+function initializeAuthWhenReady() {
     if (typeof google !== 'undefined' && google.accounts) {
         initGoogleAuth();
     } else {
-        // Fallback polling if script loads late
         const checkGoogle = setInterval(() => {
             if (typeof google !== 'undefined' && google.accounts) {
                 clearInterval(checkGoogle);
@@ -71,4 +68,6 @@ window.onload = () => {
             }
         }, 100);
     }
-};
+}
+
+initializeAuthWhenReady();
