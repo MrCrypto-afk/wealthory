@@ -52,8 +52,8 @@
 
   <!-- Google Auth & Export -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js" defer></script>
   <script src="/js/auth.js"></script>
   <script src="/js/export.js"></script>
 </head>
@@ -126,7 +126,6 @@
           <canvas id="calcChart"></canvas>
         </div>
         <div class="download-actions" style="display:flex; gap:10px; justify-content:center; margin-top:1.5rem; flex-wrap:wrap;">
-          <button class="btn btn-secondary" onclick="requireAuth(handleDownloadCSV)" style="background:transparent; border:1px solid var(--color-primary); color:var(--color-primary); padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Download CSV</button>
           <button class="btn btn-primary" onclick="requireAuth(handleDownloadPDF)" style="background:var(--color-primary); border:none; color:white; padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Download PDF</button>
         </div>
 
@@ -288,11 +287,6 @@
     let exportRows = [];
     let exportInputs = {};
     let exportInsights = [];
-
-    function handleDownloadCSV() {
-        if(exportRows.length === 0) calculate();
-        generateCSV(['Year', 'Invested', 'Total Value'], exportRows, 'wealthory_report.csv');
-    }
 
     function handleDownloadPDF() {
         if(exportRows.length === 0) calculate();

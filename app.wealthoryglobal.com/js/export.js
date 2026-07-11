@@ -1,23 +1,6 @@
 /**
- * Centralized Export Utility for CSV and PDF generation
+ * Centralized Export Utility for PDF generation
  */
-
-function generateCSV(headers, rows, filename) {
-    const csvContent = [
-        headers.join(','),
-        ...rows.map(row => row.join(','))
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
 
 function generatePDF(title, inputs, headers, rows, filename, insights) {
     if (typeof window.jspdf === 'undefined') {
@@ -28,59 +11,136 @@ function generatePDF(title, inputs, headers, rows, filename, insights) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     
-    // Add Logo/Branding Header
-    doc.setFontSize(22);
-    doc.setTextColor(0, 68, 204); // Wealthory Blue
-    doc.text('Wealthory Global', 14, 20);
+    // --- Header Section ---
+    // Background banner for header
+    doc.setFillColor(0, 68, 204); // Wealthory Blue
+    doc.rect(0, 0, 210, 35, 'F');
     
+    // Title
+    doc.setFontSize(26);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.text('Wealthory Global', 14, 22);
+    
+    // Sub-title
     doc.setFontSize(14);
-    doc.setTextColor(40, 40, 40);
-    doc.text(title, 14, 30);
+    doc.setFont("helvetica", "normal");
+    doc.text(title + " Report", 14, 30);
     
-    let currentY = 40;
-    
-    // Summary of Inputs
-    doc.setFontSize(12);
-    doc.setTextColor(100, 100, 100);
-    doc.text('Your Inputs:', 14, currentY);
-    currentY += 8;
-    
+    // Date
+    const dateStr = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
     doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0);
-    Object.entries(inputs).forEach(([key, val]) => {
-        doc.text(`${key}: ${val}`, 14, currentY);
-        currentY += 6;
+    doc.text(dateStr, 196, 28, { align: 'right' });
+    
+    let currentY = 45;
+    
+    // --- Your Inputs Card ---
+    doc.setFontSize(16);
+    doc.setTextColor(30, 30, 30);
+    doc.setFont("helvetica", "bold");
+    doc.text('Investment Parameters', 14, currentY);
+    currentY += 6;
+    
+    // Draw rounded rect for inputs
+    const inputEntries = Object.entries(inputs);
+    const boxHeight = (inputEntries.length * 8) + 10;
+    
+    doc.setDrawColor(220, 220, 220);
+    doc.setFillColor(249, 250, 251); // Light gray surface
+    doc.roundedRect(14, currentY, 182, boxHeight, 3, 3, 'FD');
+    
+    currentY += 8;
+    doc.setFontSize(11);
+    
+    inputEntries.forEach(([key, val]) => {
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(80, 80, 80);
+        doc.text(`${key}:`, 20, currentY);
+        
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(0, 0, 0);
+        doc.text(`${val}`, 80, currentY);
+        currentY += 8;
     });
     
-    currentY += 4;
+    currentY += 8; // Extra padding below the box
     
-    // Advanced Insights & Scoring
+    // --- Advanced Insights & Scoring ---
     if (insights && insights.length > 0) {
-        doc.setFontSize(12);
+        doc.setFontSize(16);
         doc.setTextColor(0, 68, 204);
-        doc.text('Wealthory Insights & Suggestions:', 14, currentY);
-        currentY += 8;
+        doc.setFont("helvetica", "bold");
+        doc.text('Wealthory Insights & Analysis', 14, currentY);
+        currentY += 6;
         
-        doc.setFontSize(10);
-        doc.setTextColor(40, 40, 40);
-        insights.forEach(insight => {
-            const splitText = doc.splitTextToSize(`• ${insight}`, 180);
-            doc.text(splitText, 14, currentY);
-            currentY += (splitText.length * 5) + 2;
+        // Calculate dynamic height for insights box
+        let totalLines = 0;
+        const insightsLines = insights.map(insight => {
+            const lines = doc.splitTextToSize(insight, 170);
+            totalLines += lines.length;
+            return lines;
         });
-        currentY += 4;
+        
+        const insightsBoxHeight = (totalLines * 6) + (insights.length * 4) + 6;
+        
+        // Draw highlighted border box
+        doc.setDrawColor(0, 68, 204);
+        doc.setLineWidth(0.5);
+        doc.setFillColor(240, 247, 255); // Very light blue
+        doc.roundedRect(14, currentY, 182, insightsBoxHeight, 3, 3, 'FD');
+        
+        currentY += 8;
+        doc.setFontSize(11);
+        doc.setTextColor(30, 30, 30);
+        
+        insightsLines.forEach(lines => {
+            // Draw bullet
+            doc.setFillColor(0, 68, 204);
+            doc.circle(20, currentY - 1.5, 1.5, 'F');
+            
+            doc.setFont("helvetica", "normal");
+            doc.text(lines, 25, currentY);
+            currentY += (lines.length * 6) + 4;
+        });
+        
+        currentY += 8;
     }
     
-    // Year on Year Data Table
+    // --- Year on Year Data Table ---
     if (headers && rows && rows.length > 0) {
+        doc.setFontSize(16);
+        doc.setTextColor(30, 30, 30);
+        doc.setFont("helvetica", "bold");
+        doc.text('Amortization & Growth Schedule', 14, currentY + 4);
+        
         doc.autoTable({
-            startY: currentY,
+            startY: currentY + 8,
             head: [headers],
             body: rows,
             theme: 'striped',
-            headStyles: { fillColor: [0, 68, 204] },
-            margin: { top: 10 }
+            headStyles: { fillColor: [0, 68, 204], textColor: 255, fontStyle: 'bold' },
+            bodyStyles: { textColor: 50 },
+            alternateRowStyles: { fillColor: [249, 250, 251] },
+            margin: { left: 14, right: 14 },
+            styles: { font: 'helvetica', fontSize: 10, cellPadding: 4 }
         });
+        
+        currentY = doc.lastAutoTable.finalY + 15;
+    }
+    
+    // --- Footer ---
+    const pageCount = doc.internal.getNumberOfPages();
+    for(let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setDrawColor(200, 200, 200);
+        doc.line(14, 285, 196, 285);
+        
+        doc.setFontSize(9);
+        doc.setTextColor(150, 150, 150);
+        doc.setFont("helvetica", "italic");
+        doc.text('Generated by Wealthory Global — For illustrative purposes only. Not financial advice.', 14, 292);
+        
+        doc.text(`Page ${i} of ${pageCount}`, 196, 292, { align: 'right' });
     }
     
     doc.save(filename);
