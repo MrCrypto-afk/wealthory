@@ -48,6 +48,13 @@
     gtag('config', 'G-9PBSV25Z3K');
   </script>
     <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- Google Auth & Export -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/export.js"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -113,6 +120,11 @@
         <div class="chart-container">
           <canvas id="calcChart"></canvas>
         </div>
+        <div class="download-actions" style="display:flex; gap:10px; justify-content:center; margin-top:1.5rem; flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="requireAuth(handleDownloadCSV)" style="background:transparent; border:1px solid var(--color-primary); color:var(--color-primary); padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Download CSV</button>
+          <button class="btn btn-primary" onclick="requireAuth(handleDownloadPDF)" style="background:var(--color-primary); border:none; color:white; padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Download PDF</button>
+        </div>
+
       </div>
     </div>
 
@@ -176,9 +188,25 @@
     function initChart() {
       const ctx = document.getElementById('calcChart').getContext('2d');
       chart = new Chart(ctx, {
-        type: 'doughnut',
-        data: { labels: ['Principal', 'Interest'], datasets: [{ data: [50, 50], backgroundColor: ['#0044cc', '#00B3FF'], borderWidth: 0 }] },
-        options: { cutout: '75%', plugins: { legend: { display: false } } }
+        type: 'line',
+        data: { 
+            labels: [], 
+            datasets: [
+                { label: 'Principal Paid', data: [], borderColor: '#0044cc', backgroundColor: 'rgba(0, 68, 204, 0.1)', fill: true, tension: 0.4 },
+                { label: 'Interest Paid', data: [], borderColor: '#00B3FF', backgroundColor: 'rgba(0, 179, 255, 0.1)', fill: true, tension: 0.4 },
+                { label: 'Balance', data: [], borderColor: '#ff4444', backgroundColor: 'rgba(255, 68, 68, 0.1)', fill: false, tension: 0.4 }
+            ] 
+        },
+        options: { 
+            responsive: true,
+            plugins: { legend: { position: 'bottom' } },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+      });
+    }
+
       });
     }
 
@@ -200,11 +228,43 @@
       let totalPayment = emi * n;
       let totalInterest = totalPayment - P;
 
+      exportRows = [];
+      exportInsights = [];
+      exportInputs = {
+        'Loan Amount': fmt.format(P),
+        'Interest Rate': R + '%',
+        'Tenure': years + ' Years'
+      };
+      
+      let balance = P;
+      for (let y = 1; y <= years; y++) {
+          let yearPrincipal = 0;
+          let yearInterest = 0;
+          for (let m = 1; m <= 12; m++) {
+              let interestForMonth = balance * r;
+              let principalForMonth = emi - interestForMonth;
+              yearInterest += interestForMonth;
+              yearPrincipal += principalForMonth;
+              balance -= principalForMonth;
+          }
+          exportRows.push([`Year ${y}`, fmt.format(yearPrincipal), fmt.format(yearInterest), fmt.format(Math.max(0, balance))]);
+      }
+      
+      if (totalInterest > P) {
+          exportInsights.push("Warning: You are paying more in interest than your original loan amount! Consider increasing your EMI or prepaying.");
+      } else {
+          exportInsights.push("Your interest burden is relatively well managed.");
+      }
+      exportInsights.push(`Adding just 5% to your EMI every year can drastically reduce your tenure and save you significant interest.`);
+
       document.getElementById('res-principal').textContent = fmt.format(P);
       document.getElementById('res-interest').textContent = fmt.format(totalInterest);
       document.getElementById('res-emi').textContent = fmt.format(emi);
 
-      chart.data.datasets[0].data = [P, totalInterest];
+      chart.data.labels = exportRows.map(row => row[0]);
+      chart.data.datasets[0].data = exportRows.map(row => parseFloat(row[1].replace(/[^0-9.-]+/g,"")));
+      chart.data.datasets[1].data = exportRows.map(row => parseFloat(row[2].replace(/[^0-9.-]+/g,"")));
+      chart.data.datasets[2].data = exportRows.map(row => parseFloat(row[3].replace(/[^0-9.-]+/g,"")));
       chart.update();
     }
 
@@ -228,6 +288,21 @@
         sync(idBase, e.target.value);
       });
     });
+
+    
+    let exportRows = [];
+    let exportInputs = {};
+    let exportInsights = [];
+
+    function handleDownloadCSV() {
+        if(exportRows.length === 0) calculate();
+        generateCSV(['Year', 'Principal Paid', 'Interest Paid', 'Balance'], exportRows, 'wealthory_emi_report.csv');
+    }
+
+    function handleDownloadPDF() {
+        if(exportRows.length === 0) calculate();
+        generatePDF(document.title.split('|')[0].trim(), exportInputs, ['Year', 'Principal Paid', 'Interest Paid', 'Balance'], exportRows, 'wealthory_emi_report.pdf', exportInsights);
+    }
 
     window.onload = () => { initChart(); calculate(); };
   </script>

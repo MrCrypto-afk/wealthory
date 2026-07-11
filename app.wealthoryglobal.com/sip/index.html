@@ -49,6 +49,13 @@
     gtag('config', 'G-9PBSV25Z3K');
   </script>
     <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- Google Auth & Export -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/export.js"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -118,6 +125,11 @@
         <div class="chart-container">
           <canvas id="calcChart"></canvas>
         </div>
+        <div class="download-actions" style="display:flex; gap:10px; justify-content:center; margin-top:1.5rem; flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="requireAuth(handleDownloadCSV)" style="background:transparent; border:1px solid var(--color-primary); color:var(--color-primary); padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Download CSV</button>
+          <button class="btn btn-primary" onclick="requireAuth(handleDownloadPDF)" style="background:var(--color-primary); border:none; color:white; padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Download PDF</button>
+        </div>
+
       </div>
     </div>
 
@@ -184,9 +196,24 @@
     function initChart() {
       const ctx = document.getElementById('calcChart').getContext('2d');
       chart = new Chart(ctx, {
-        type: 'doughnut',
-        data: { labels: ['Invested Amount', 'Wealth Gain'], datasets: [{ data: [50, 50], backgroundColor: ['#0044cc', '#00B3FF'], borderWidth: 0 }] },
-        options: { cutout: '75%', plugins: { legend: { display: false } } }
+        type: 'line',
+        data: { 
+            labels: [], 
+            datasets: [
+                { label: 'Invested Amount', data: [], borderColor: '#0044cc', backgroundColor: 'rgba(0, 68, 204, 0.1)', fill: true, tension: 0.4 },
+                { label: 'Total Value', data: [], borderColor: '#00B3FF', backgroundColor: 'rgba(0, 179, 255, 0.1)', fill: true, tension: 0.4 }
+            ] 
+        },
+        options: { 
+            responsive: true,
+            plugins: { legend: { position: 'bottom' } },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+      });
+    }
+
       });
     }
 
@@ -201,12 +228,30 @@
       let totalValue = 0;
       let monthlyRate = R / 12 / 100;
 
+      exportRows = [];
+      exportInsights = [];
+      exportInputs = {
+        'Monthly Investment': fmt.format(P),
+        'Expected Return': R + '%',
+        'Time Period': years + ' Years',
+        'Annual Step-Up': (stepUp * 100) + '%'
+      };
+
       for (let y = 1; y <= years; y++) {
         for (let m = 1; m <= 12; m++) {
           totalInvested += P;
           totalValue = (totalValue + P) * (1 + monthlyRate);
         }
+        exportRows.push([`Year ${y}`, fmt.format(totalInvested), fmt.format(totalValue)]);
         P = P * (1 + stepUp); // Apply step up at end of year
+      }
+
+      if (stepUp === 0) {
+        exportInsights.push("Warning: You have 0% Step-Up. Increasing it by just 5% can dramatically combat inflation and boost your final corpus.");
+      } else if (stepUp < 0.1) {
+        exportInsights.push("Good start with Step-Up, but pushing it to 10% (matching typical salary hikes) unlocks exponential growth.");
+      } else {
+        exportInsights.push("Excellent Step-Up rate! You are optimizing your wealth compounding beautifully.");
       }
 
       const gain = totalValue - totalInvested;
@@ -215,7 +260,9 @@
       document.getElementById('res-gain').textContent = fmt.format(gain);
       document.getElementById('res-total').textContent = fmt.format(totalValue);
 
-      chart.data.datasets[0].data = [totalInvested, gain];
+      chart.data.labels = exportRows.map(row => row[0]);
+      chart.data.datasets[0].data = exportRows.map(row => parseFloat(row[1].replace(/[^0-9.-]+/g,"")));
+      chart.data.datasets[1].data = exportRows.map(row => parseFloat(row[2].replace(/[^0-9.-]+/g,"")));
       chart.update();
     }
 
@@ -239,6 +286,21 @@
         sync(idBase, e.target.value);
       });
     });
+
+    
+    let exportRows = [];
+    let exportInputs = {};
+    let exportInsights = [];
+
+    function handleDownloadCSV() {
+        if(exportRows.length === 0) calculate();
+        generateCSV(['Year', 'Invested', 'Total Value'], exportRows, 'wealthory_report.csv');
+    }
+
+    function handleDownloadPDF() {
+        if(exportRows.length === 0) calculate();
+        generatePDF(document.title.split('|')[0].trim(), exportInputs, ['Year', 'Invested', 'Total Value'], exportRows, 'wealthory_report.pdf', exportInsights);
+    }
 
     window.onload = () => { initChart(); calculate(); };
   </script>
