@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Methodology & Trust | Wealthory Global</title>
+  <meta name="description" content="Discover the institutional-grade methodology behind Wealthory Global's financial calculators." />
+  <link rel="canonical" href="https://app.wealthoryglobal.com/methodology" />
+  <link rel="stylesheet" href="/css/style.css?v=13" />
+  <script src="/js/schema.js" defer></script>
+  <!-- Vercel Web Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q20PFWS8LP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Q20PFWS8LP');
+  </script>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('wealthory-theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/" class="logo" aria-label="Wealthory Home">
+        <img src="/assets/logo-light.png" alt="Wealthory Logo" class="logo-light" />
+        <img src="/assets/logo-dark.png" alt="Wealthory Logo" class="logo-dark" />
+      </a>
+      <div class="nav-links">
+        <a href="/resources" class="nav-link">Insights</a>
+        <a href="/" class="nav-cta">All Tools</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <h1>Methodology & Trust</h1>
+      <p>Institutional-grade financial architecture engineered for serious investors.</p>
+    </div>
+
+    <section class="seo-content" style="max-width: 800px; margin: 2rem auto; padding: 2rem; background: var(--color-bg-alt); border-radius: 8px;">
+      <h2>Our Mathematical Framework</h2>
+      <p>All calculators on Wealthory Global are built using standard, institutional-grade quantitative formulas verified for accuracy. We believe in absolute transparency and zero noise when it comes to projecting wealth.</p>
+      
+      <h2>Professional Expertise</h2>
+      <p>The logic and models powering this platform are developed and audited by a financial professional holding a <strong>NISM Series V-A Certification (Mutual Fund Distributors)</strong> and operating as an <strong>active CFA Level I candidate</strong>. This ensures that every calculation aligns strictly with current Indian market regulations and global best practices in quantitative finance.</p>
+
+      <h2>Data Privacy</h2>
+      <p>Your financial inputs are processed locally in your browser. We do not store, track, or share your financial data.</p>
+    </section>
+  </main>
+
+  <footer class="compliance-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p><strong>Risk Warning:</strong> Mutual fund investments are subject to market risks, read all scheme related documents carefully. The calculators provided on this platform are for illustrative purposes only and do not constitute financial advice. Past performance is not indicative of future returns.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Wealthory Global. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="/methodology">Methodology</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+          <a href="/grievance">Grievance Redressal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('wealthory-theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

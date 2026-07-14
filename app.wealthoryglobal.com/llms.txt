@@ -1,0 +1,13 @@
+# Wealthory Global
+
+> Premium financial calculators and institutional-grade wealth architecture tools for serious Indian investors.
+
+- [SIP & Wealth Builder](https://app.wealthoryglobal.com/sip): See how small monthly habits snowball into massive wealth and watch your money compound effortlessly.
+- [EMI & Loan Planner](https://app.wealthoryglobal.com/emi): Find out exactly how much you'll pay every month and learn how to crush your loans faster.
+- [Dream Goal Planner](https://app.wealthoryglobal.com/goal-planner): See exactly how much you need to save today to achieve goals like buying a house or traveling.
+- [Retirement Planner](https://app.wealthoryglobal.com/retirement): Find out your exact retirement number to ensure you have enough to live life on your terms.
+- [FIRE Calculator](https://app.wealthoryglobal.com/fire): Calculate exactly how soon you can achieve total financial freedom and quit the rat race early.
+- [Income Tax Saver](https://app.wealthoryglobal.com/tax): Compare the Old vs New tax regime instantly and keep more of your hard-earned money.
+- [FD vs Mutual Funds](https://app.wealthoryglobal.com/fd-vs-mf): Compare safe FDs against Mutual Funds to see where your money grows fastest and beats inflation.
+- [Cost of Delay](https://app.wealthoryglobal.com/cost-of-delay): Calculate the wealth destruction caused by waiting just 1 year to invest.
+- [SWP Pension Planner](https://app.wealthoryglobal.com/swp): Turn your lump-sum corpus into a sustainable paycheck for life by calculating safe withdrawal rates.
