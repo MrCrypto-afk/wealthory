@@ -16,8 +16,12 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.wealthoryglobal.com'),
   title: "Wealthory Global | Premium Financial Services & Market Insights",
   description: "Institutional-grade financial services and actionable market insights for investors who demand excellence.",
+  alternates: {
+    canonical: '/',
+  },
   verification: {
     google: "IdiZ2KSgO8DPpMXd4i7r47HQhPHctYPEXICPF9zuiGc",
   },
