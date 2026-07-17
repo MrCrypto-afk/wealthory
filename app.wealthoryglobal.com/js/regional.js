@@ -2,15 +2,37 @@
 
 (function() {
   const currencyMap = {
+    // North America
     'US': { symbol: '$', code: 'USD', locale: 'en-US' },
-    'IN': { symbol: '₹', code: 'INR', locale: 'en-IN' },
-    'FR': { symbol: '€', code: 'EUR', locale: 'fr-FR' },
-    'JP': { symbol: '¥', code: 'JPY', locale: 'ja-JP' },
-    'GB': { symbol: '£', code: 'GBP', locale: 'en-GB' },
-    'AU': { symbol: 'A$', code: 'AUD', locale: 'en-AU' },
     'CA': { symbol: 'C$', code: 'CAD', locale: 'en-CA' },
+    'MX': { symbol: '$', code: 'MXN', locale: 'es-MX' },
+    // Europe
+    'GB': { symbol: '£', code: 'GBP', locale: 'en-GB' },
+    'FR': { symbol: '€', code: 'EUR', locale: 'fr-FR' },
+    'DE': { symbol: '€', code: 'EUR', locale: 'de-DE' },
+    'IT': { symbol: '€', code: 'EUR', locale: 'it-IT' },
+    'ES': { symbol: '€', code: 'EUR', locale: 'es-ES' },
+    'NL': { symbol: '€', code: 'EUR', locale: 'nl-NL' },
+    'CH': { symbol: 'CHF', code: 'CHF', locale: 'de-CH' },
+    'SE': { symbol: 'kr', code: 'SEK', locale: 'sv-SE' },
+    'UA': { symbol: '₴', code: 'UAH', locale: 'uk-UA' },
+    'RU': { symbol: '₽', code: 'RUB', locale: 'ru-RU' },
+    // Asia & Pacific
+    'IN': { symbol: '₹', code: 'INR', locale: 'en-IN' },
+    'CN': { symbol: '¥', code: 'CNY', locale: 'zh-CN' },
+    'JP': { symbol: '¥', code: 'JPY', locale: 'ja-JP' },
+    'KR': { symbol: '₩', code: 'KRW', locale: 'ko-KR' },
     'SG': { symbol: 'S$', code: 'SGD', locale: 'en-SG' },
-    'UA': { symbol: '₴', code: 'UAH', locale: 'uk-UA' }
+    'AU': { symbol: 'A$', code: 'AUD', locale: 'en-AU' },
+    'NZ': { symbol: 'NZ$', code: 'NZD', locale: 'en-NZ' },
+    // Middle East & Africa
+    'AE': { symbol: 'AED', code: 'AED', locale: 'en-AE' },
+    'SA': { symbol: 'SAR', code: 'SAR', locale: 'en-SA' },
+    'ZA': { symbol: 'R', code: 'ZAR', locale: 'en-ZA' },
+    'TR': { symbol: '₺', code: 'TRY', locale: 'tr-TR' },
+    // South America
+    'BR': { symbol: 'R$', code: 'BRL', locale: 'pt-BR' },
+    'AR': { symbol: '$', code: 'ARS', locale: 'es-AR' }
   };
   const defaultRegion = { symbol: '$', code: 'USD', locale: 'en-US' };
 
