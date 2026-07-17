@@ -53,8 +53,11 @@
       }).format(value);
     };
 
-    // Hide India-specific tools for international users
-    if (country !== 'IN') {
+    // SEO PROTECTION: Check if visitor is a search engine bot (Googlebot primarily crawls from US)
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+
+    // Hide India-specific tools for international users, EXCEPT for search engine bots
+    if (country !== 'IN' && !isBot) {
       const taxCard = document.querySelector('a[href="/tax"]');
       if (taxCard) taxCard.style.display = 'none';
       
