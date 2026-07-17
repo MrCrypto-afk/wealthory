@@ -57,6 +57,7 @@
   <script src="/js/auth.js"></script>
   <script src="/js/export.js"></script>
   <script src="/js/schema.js" defer></script>
+  <script src="/js/regional.js"></script>
   <script src="/js/tracking.js" defer></script>
 </head>
 <body>
@@ -191,7 +192,7 @@
   </footer>
 
   <script>
-    const fmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    const fmt = { format: (val) => window.formatCurrency(val) };
     let chart;
 
     function initChart() {

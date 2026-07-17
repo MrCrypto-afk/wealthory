@@ -58,6 +58,7 @@
   <script src="/js/auth.js"></script>
   <script src="/js/export.js"></script>
   <script src="/js/schema.js" defer></script>
+  <script src="/js/regional.js"></script>
   <script src="/js/tracking.js" defer></script>
 </head>
 <body>
@@ -194,8 +195,8 @@
 
   <script>
     (function () {
-      const fmt = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
-      const fmtCurrency = (v) => '\u20B9 ' + fmt.format(v);
+      const fmt = { format: (val) => window.formatNumber(val) };
+      const fmtCurrency = (v) => window.formatCurrency(v);
 
       const inputs = {
         initialCorpus: document.getElementById('initialCorpus'),
